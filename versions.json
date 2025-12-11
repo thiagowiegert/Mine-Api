@@ -1,0 +1,20 @@
+{
+  "versions": [
+    {
+      "name": "Minecraft 1.21.124.2",
+      "url": "https://tu-servidor.com/mc_1.21.124.2.apk",
+      "size": "184 MB",
+      "date": "2025-02-10",
+      "notes": "Corrección de errores y mejoras.",
+      "changelog": "https://tu-servidor.com/changelog/1.21.124.2"
+    },
+    {
+      "name": "Minecraft 1.21.100.5",
+      "url": "https://tu-servidor.com/mc_1.21.100.5.apk",
+      "size": "176 MB",
+      "date": "2024-12-28",
+      "notes": "Actualización de estabilidad.",
+      "changelog": "https://tu-servidor.com/changelog/1.21.100.5"
+    }
+  ]
+}
