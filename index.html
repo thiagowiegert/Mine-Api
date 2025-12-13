@@ -172,7 +172,7 @@ function updateInfo() {
   btn.href = selected.value;
   changelogBtn.href = selected.dataset.html_url;
   info.innerHTML = `
-    <strong>📝 Notas:</strong> ${selected.dataset.body}<br><br>
+    <strong>📝 Notas:</strong><br> ${selected.dataset.body}<br><br>
     <strong>📦 Tamaño:</strong> ${selected.dataset.size}<br>
     <strong>📅 Fecha:</strong> ${selected.dataset.date}
   `;
