@@ -6,226 +6,207 @@
 <title>Mine-Api</title>
 
 <style>
-:root {
-  --primary: #43a047;
-  --primary-dark: #2e7d32;
-  --whatsapp: #25D366;
-  --whatsapp-dark: #128C7E;
-  --radius: 16px;
+:root{
+  --primary:#43a047;
+  --primary-dark:#2e7d32;
+  --whatsapp:#25D366;
+  --whatsapp-dark:#128C7E;
+  --radius:16px;
 }
 
-* { box-sizing: border-box; margin:0; padding:0; }
+*{box-sizing:border-box;margin:0;padding:0}
 
-body {
-  font-family:'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)),
-    url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
-  color:white;
+body{
+  font-family:'Segoe UI',Roboto,sans-serif;
+  background:linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.9)),
+  url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
+  color:#fff;
   min-height:100vh;
-  padding:5vw;
   display:flex;
   justify-content:center;
   align-items:center;
+  padding:5vw;
 }
 
-.container { width:100%; max-width:900px; }
+.container{max-width:900px;width:100%}
 
-.content {
-  background: rgba(255,255,255,0.05);
-  padding: clamp(1rem,4vw,2rem);
-  border-radius: var(--radius);
-  backdrop-filter: blur(12px);
-  border:1px solid rgba(255,255,255,0.1);
+.content{
+  background:rgba(255,255,255,.06);
+  border-radius:var(--radius);
+  padding:2rem;
+  backdrop-filter:blur(12px);
   text-align:center;
 }
 
-h1 {
-  font-size:clamp(1.8rem,6vw,2.5rem);
-  color:var(--primary);
-  margin-bottom:1rem;
-}
+h1{color:var(--primary);margin-bottom:1rem}
 
-.subtitle { opacity:0.9; margin-bottom:1.5rem; }
+.version-box{text-align:left;margin-bottom:1rem}
 
-.version-box { margin-bottom:1rem; text-align:left; }
-
-select {
+select{
   width:100%;
-  padding:0.9rem;
-  margin-top:0.5rem;
+  padding:.9rem;
   border-radius:12px;
+  border:none;
+  background:rgba(255,255,255,.15);
+  color:#fff;
   font-size:1rem;
-  border:1px solid rgba(255,255,255,0.2);
-  background:rgba(255,255,255,0.1);
-  color:white;
 }
 
-select option { color:black; }
+select option{color:#000}
 
-.info {
-  margin:1rem 0;
-  font-size:0.95rem;
-  opacity:0.9;
+.info{
   text-align:left;
+  font-size:.95rem;
+  opacity:.9;
+  margin:1rem 0;
 }
 
-.btn-container {
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-  align-items:center;
-}
-
-.btn {
-  background-color: var(--primary);
-  color:white;
+.btn{
+  display:block;
+  background:var(--primary);
   padding:1rem;
   border-radius:12px;
-  font-weight:bold;
   text-decoration:none;
-  width:100%;
-  max-width:320px;
-  transition:0.3s;
+  color:#fff;
+  font-weight:bold;
+  margin:.5rem 0;
+  transition:.3s;
 }
 
-.btn:hover { background-color: var(--primary-dark); }
+.btn:hover{background:var(--primary-dark)}
 
-.btn-whatsapp {
-  background-color: var(--whatsapp);
+.btn-whatsapp{
+  background:var(--whatsapp);
 }
 
-.btn-whatsapp:hover {
-  background-color: var(--whatsapp-dark);
+.btn-whatsapp:hover{
+  background:var(--whatsapp-dark);
 }
 
-footer {
-  margin-top:1.5rem;
-  opacity:0.7;
-}
-
-.new-badge {
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#43a047;
+  color:#fff;
+  padding:12px 20px;
+  border-radius:20px;
+  font-weight:bold;
   display:none;
-  background: gold;
-  color: black;
-  font-weight: bold;
-  padding: 4px 10px;
-  border-radius: 10px;
-  margin-left:10px;
-  font-size:0.8rem;
+  z-index:999;
 }
 </style>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
+
 <body>
 
+<div class="toast" id="toast">🚀 Nueva versión disponible</div>
+
 <div class="container">
-  <main class="content">
-    <h1>Mine-Api <span id="newBadge" class="new-badge">Nueva versión disponible</span></h1>
-    <p class="subtitle">Descarga cualquier versión desde nuestros servidores</p>
+  <div class="content">
+    <h1>Mine-Api</h1>
 
     <div class="version-box">
-      <label>Elige una versión:</label>
-      <select id="versionSelector">
-        <option>Cargando versiones...</option>
+      <label>Selecciona una versión:</label>
+      <select id="selector">
+        <option>Cargando versiones…</option>
       </select>
     </div>
 
-    <div id="releaseInfo" class="info">
-      Selecciona una versión para ver los detalles
-    </div>
+    <div class="info" id="info">Selecciona una versión</div>
 
-    <div class="btn-container">
-      <a id="downloadBtn" href="#" class="btn">
-        <i class="fas fa-download"></i> Descargar APK
-      </a>
+    <a id="download" class="btn" href="#">Descargar APK</a>
+    <a id="changelog" class="btn" href="#" target="_blank">Ver changelog</a>
 
-      <a id="changelogBtn" href="#" class="btn" target="_blank">
-        <i class="fas fa-scroll"></i> Ver Changelog
-      </a>
+    <!-- BOTÓN WHATSAPP -->
+    <a href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
+       target="_blank"
+       class="btn btn-whatsapp">
+       Canal de WhatsApp
+    </a>
 
-      <a href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
-         class="btn btn-whatsapp" target="_blank">
-        <i class="fab fa-whatsapp"></i> Canal de WhatsApp
-      </a>
-    </div>
-  </main>
-
-  <footer>© 2025 Minecraft Free</footer>
+  </div>
 </div>
 
 <script>
-const selector = document.getElementById("versionSelector");
-const downloadBtn = document.getElementById("downloadBtn");
-const changelogBtn = document.getElementById("changelogBtn");
-const info = document.getElementById("releaseInfo");
-const newBadge = document.getElementById("newBadge");
-
 const repo = "thiagowiegert/Mine-Api";
-const lastReleaseKey = "lastReleaseDate";
+const CACHE_KEY = "releasesCache";
+const CACHE_TIME = 6 * 60 * 60 * 1000;
+const LAST_SEEN = "lastSeenRelease";
 
-async function loadReleases() {
-  try {
-    const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
-    const releases = await res.json();
+const selector = document.getElementById("selector");
+const info = document.getElementById("info");
+const download = document.getElementById("download");
+const changelog = document.getElementById("changelog");
+const toast = document.getElementById("toast");
 
-    selector.innerHTML = "";
+async function getReleases(){
+  const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+  if(cache && Date.now() - cache.time < CACHE_TIME){
+    return cache.data;
+  }
 
-    if (!releases.length) {
-      selector.innerHTML = "<option>No hay versiones</option>";
-      return;
-    }
+  const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
+  const data = await res.json();
 
-    releases.forEach(release => {
-      const apk = release.assets.find(a => a.name.endsWith(".apk"));
-      if (!apk) return;
+  localStorage.setItem(CACHE_KEY, JSON.stringify({
+    time: Date.now(),
+    data
+  }));
 
-      const option = document.createElement("option");
-      option.value = apk.browser_download_url;
-      option.dataset.size = (apk.size / 1024 / 1024).toFixed(2) + " MB";
-      option.dataset.date = release.published_at;
-      option.dataset.body = release.body || "Sin notas";
-      option.dataset.html = release.html_url;
-      option.textContent = release.name || release.tag_name;
+  return data;
+}
 
-      selector.appendChild(option);
-    });
+function showToast(){
+  toast.style.display="block";
+  setTimeout(()=>toast.style.display="none",5000);
+}
 
-    selector.selectedIndex = 0;
-    updateInfo();
+function updateInfo(){
+  const opt = selector.selectedOptions[0];
 
-    const latestDate = new Date(releases[0].published_at).getTime();
-    const savedDate = localStorage.getItem(lastReleaseKey);
+  download.href = opt.value;
+  changelog.href = opt.dataset.html;
 
-    if (!savedDate || latestDate > Number(savedDate)) {
-      newBadge.style.display = "inline-block";
-    }
+  info.innerHTML = `
+    📦 <strong>Tamaño:</strong> ${opt.dataset.size}<br>
+    📅 <strong>Fecha:</strong> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
+    📝 <strong>Notas:</strong><br>${opt.dataset.notes}
+  `;
 
-  } catch (e) {
-    selector.innerHTML = "<option>Error al cargar versiones</option>";
-    console.error(e);
+  localStorage.setItem(LAST_SEEN,opt.dataset.date);
+}
+
+async function load(){
+  const releases = await getReleases();
+  selector.innerHTML="";
+
+  releases.forEach(r=>{
+    const apk = r.assets.find(a=>a.name.endsWith(".apk"));
+    if(!apk) return;
+
+    const op = document.createElement("option");
+    op.textContent = r.name || r.tag_name;
+    op.value = apk.browser_download_url;
+    op.dataset.size = (apk.size/1024/1024).toFixed(2)+" MB";
+    op.dataset.date = r.published_at;
+    op.dataset.notes = (r.body||"Sin notas").replace(/\n/g,"<br>");
+    op.dataset.html = r.html_url;
+    selector.appendChild(op);
+  });
+
+  selector.selectedIndex = 0;
+  updateInfo();
+
+  const lastSeen = localStorage.getItem(LAST_SEEN);
+  if(!lastSeen || new Date(releases[0].published_at) > new Date(lastSeen)){
+    showToast();
   }
 }
 
-function updateInfo() {
-  const opt = selector.selectedOptions[0];
-
-  downloadBtn.href = opt.value;
-  changelogBtn.href = opt.dataset.html;
-
-  info.innerHTML = `
-    <strong>📦 Tamaño:</strong> ${opt.dataset.size}<br>
-    <strong>📅 Fecha:</strong> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
-    <strong>📝 Notas:</strong><br>${opt.dataset.body.replace(/\n/g, "<br>")}
-  `;
-
-  localStorage.setItem(lastReleaseKey, new Date(opt.dataset.date).getTime());
-  newBadge.style.display = "none";
-}
-
-selector.addEventListener("change", updateInfo);
-
-loadReleases();
+selector.addEventListener("change",updateInfo);
+load();
 </script>
 
 </body>
