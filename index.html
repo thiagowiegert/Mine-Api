@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minecraft Free</title>
+
+<style>
+:root {
+  --primary: #43a047;
+  --primary-dark: #2e7d32;
+  --whatsapp: #25D366;
+  --whatsapp-dark: #128C7E;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+
+body {
+  font-family:'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.9)),
+    url('https://raw.githubusercontent.com/thiagowiegert/Minecraft-Free/refs/heads/main/releases/minecraft.jpg') center/cover fixed;
+  color:white;
+  min-height:100vh;
+  padding:5vw;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.container { width:100%; max-width:900px; }
+
+.content {
+  background: rgba(255,255,255,0.05);
+  padding: clamp(1rem,4vw,2rem);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  border:1px solid rgba(255,255,255,0.1);
+  text-align:center;
+}
+
+h1 { font-size:clamp(1.8rem,6vw,2.5rem); color:var(--primary); margin-bottom:1rem; text-shadow:0 2px 5px rgba(0,0,0,0.6); }
+.subtitle { opacity:0.9; font-size:clamp(1rem,3.5vw,1.3rem); margin-bottom:1.5rem; }
+
+.version-box { margin-bottom:1rem; text-align:left; }
+.version-label { font-size:1rem; opacity:0.8; }
+select {
+  width:100%; padding:0.9rem; margin-top:0.5rem; border-radius:12px;
+  font-size:1rem; border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.1); color:white; backdrop-filter:blur(5px);
+}
+select option { color:black; }
+
+.info { margin:0.5rem 0; font-size:0.9rem; opacity:0.8; text-align:left; }
+.btn-container { display:flex; flex-direction:column; gap:1rem; align-items:center; width:100%; }
+
+.btn {
+  background-color: var(--primary); color:white; padding:clamp(0.8rem,3.5vw,1rem);
+  border-radius:12px; font-weight:bold; text-decoration:none; width:100%; max-width:320px;
+  display:flex; justify-content:center; align-items:center; gap:10px; font-size:clamp(1rem,3vw,1.2rem);
+  transition:0.3s;
+}
+.btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+
+.btn-whatsapp { background-color: var(--whatsapp); }
+.btn-whatsapp:hover { background-color: var(--whatsapp-dark); }
+
+footer { margin-top:1.5rem; text-align:center; opacity:0.7; font-size:clamp(0.8rem,3vw,1rem); }
+
+.new-badge {
+  background: gold;
+  color: black;
+  font-weight: bold;
+  padding: 0 8px;
+  border-radius: 8px;
+  margin-left:8px;
+  font-size:0.8rem;
+}
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<div class="container">
+  <main class="content">
+    <h1>Minecraft Free<span id="newBadge" class="new-badge" style="display:none;">Nueva</span></h1>
+    <p class="subtitle">Descarga cualquier versión desde nuestros Servidores.</p>
+
+    <div class="version-box">
+      <label class="version-label">Elige una versión:</label>
+      <select id="versionSelector"><option>Cargando versiones...</option></select>
+    </div>
+
+    <div class="info" id="releaseInfo">Selecciona una versión para ver detalles...</div>
+
+    <div class="btn-container">
+      <a id="downloadBtn" href="#" class="btn">
+        <i class="fas fa-cloud-download-alt"></i> Descargar APK
+      </a>
+      <a id="changelogBtn" href="#" class="btn" target="_blank">
+        <i class="fas fa-scroll"></i> Ver Changelog
+      </a>
+
+      <a href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M" 
+         class="btn btn-whatsapp" target="_blank">
+        <i class="fab fa-whatsapp"></i> Canal de WhatsApp
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Minecraft Free<br>
+    Página v2.0
+  </footer>
+</div>
+
+<script>
+const selector = document.getElementById("versionSelector");
+const btn = document.getElementById("downloadBtn");
+const info = document.getElementById("releaseInfo");
+const changelogBtn = document.getElementById("changelogBtn");
+const newBadge = document.getElementById("newBadge");
+
+const repo = "thiagowiegert/Mine-Api";
+const lastVersionKey = "lastMCVersion";
+
+async function loadReleases() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
+    const data = await res.json();
+
+    selector.innerHTML = "";
+    if (!data.length) { 
+      selector.innerHTML = "<option>No hay versiones</option>"; 
+      return; 
+    }
+
+    data.forEach(release => {
+      // Buscar APK en assets, si no hay, usar enlace del release
+      const apk = release.assets.find(a => a.name.endsWith(".apk"));
+      const url = apk ? apk.browser_download_url : release.html_url;
+      const size = apk ? (apk.size / 1024 / 1024).toFixed(2) + " MB" : "N/A";
+
+      const option = document.createElement("option");
+      option.value = url;
+      option.textContent = release.name || "Versión sin nombre";
+      option.dataset.name = release.name || "Versión sin nombre";
+      option.dataset.date = new Date(release.published_at).toLocaleDateString();
+      option.dataset.size = size;
+      option.dataset.body = release.body || "Sin notas";
+      option.dataset.html_url = release.html_url;
+      selector.appendChild(option);
+    });
+
+    selector.selectedIndex = 0;
+    updateInfo();
+
+    const last = localStorage.getItem(lastVersionKey);
+    if (!last || last !== selector.selectedOptions[0].dataset.name) {
+      newBadge.style.display = "inline-block";
+    }
+
+  } catch (e) {
+    selector.innerHTML = "<option>Error al cargar versiones</option>";
+    console.error(e);
+  }
+}
+
+function updateInfo() {
+  const selected = selector.selectedOptions[0];
+  btn.href = selected.value;
+  changelogBtn.href = selected.dataset.html_url;
+  info.innerHTML = `
+    <strong>Notas:</strong> ${selected.dataset.body}<br>
+    <strong>Tamaño:</strong> ${selected.dataset.size}<br>
+    <strong>Fecha:</strong> ${selected.dataset.date}
+  `;
+
+  localStorage.setItem(lastVersionKey, selected.dataset.name);
+  newBadge.style.display = "none";
+}
+
+selector.addEventListener("change", updateInfo);
+
+loadReleases();
+</script>
+
+</body>
+</html>
