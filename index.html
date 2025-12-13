@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Minecraft Free</title>
+<title>Mine-Api</title>
 
 <style>
 :root {
@@ -84,7 +84,7 @@ footer { margin-top:1.5rem; text-align:center; opacity:0.7; font-size:clamp(0.8r
 
 <div class="container">
   <main class="content">
-    <h1>Minecraft Free<span id="newBadge" class="new-badge" style="display:none;">Nueva</span></h1>
+    <h1>Mine-Api<span id="newBadge" class="new-badge" style="display:none;">Nueva</span></h1>
     <p class="subtitle">Descarga cualquier versión desde nuestros Servidores.</p>
 
     <div class="version-box">
@@ -172,9 +172,9 @@ function updateInfo() {
   btn.href = selected.value;
   changelogBtn.href = selected.dataset.html_url;
   info.innerHTML = `
-    <strong>Notas:</strong> ${selected.dataset.body}<br>
-    <strong>Tamaño:</strong> ${selected.dataset.size}<br>
-    <strong>Fecha:</strong> ${selected.dataset.date}
+    <strong>📝 Notas:</strong> ${selected.dataset.body}<br><br>
+    <strong>📦 Tamaño:</strong> ${selected.dataset.size}<br>
+    <strong>📅 Fecha:</strong> ${selected.dataset.date}
   `;
 
   localStorage.setItem(lastVersionKey, selected.dataset.name);
