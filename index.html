@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mine-Api</title>
 
 <style>
@@ -21,14 +22,17 @@ body{
   background:linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.9)),
   url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
   color:#fff;
-  min-height:100vh;
+  height:100vh;
+  overflow:hidden; /* 🚫 sin scroll */
   display:flex;
   justify-content:center;
   align-items:center;
-  padding:5vw;
 }
 
-.container{max-width:900px;width:100%}
+.container{
+  max-width:900px;
+  width:100%;
+}
 
 .content{
   background:rgba(255,255,255,.06);
@@ -36,11 +40,19 @@ body{
   padding:2rem;
   backdrop-filter:blur(12px);
   text-align:center;
+  max-height:90vh;
+  overflow:hidden;
 }
 
-h1{color:var(--primary);margin-bottom:1rem}
+h1{
+  color:var(--primary);
+  margin-bottom:1rem;
+}
 
-.version-box{text-align:left;margin-bottom:1rem}
+.version-box{
+  text-align:left;
+  margin-bottom:1rem;
+}
 
 select{
   width:100%;
@@ -59,6 +71,17 @@ select option{color:#000}
   font-size:.95rem;
   opacity:.9;
   margin:1rem 0;
+  max-height:180px;        /* 📜 scroll interno */
+  overflow-y:auto;
+  padding-right:6px;
+}
+
+.info::-webkit-scrollbar{
+  width:6px;
+}
+.info::-webkit-scrollbar-thumb{
+  background:#43a047;
+  border-radius:10px;
 }
 
 .btn{
@@ -112,6 +135,7 @@ footer{
 
 <div class="container">
   <div class="content">
+
     <h1>Mine-Api</h1>
 
     <div class="version-box">
@@ -132,7 +156,6 @@ footer{
        Canal de WhatsApp
     </a>
 
-    <!-- FOOTER RESTAURADO -->
     <footer>
       © 2025 Minecraft Free<br>
       Página v2.0
