@@ -12,7 +12,6 @@
   --primary-dark:#2e7d32;
   --whatsapp:#25D366;
   --whatsapp-dark:#128C7E;
-  --radius:16px;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -23,7 +22,7 @@ body{
   url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
   color:#fff;
   height:100vh;
-  overflow:hidden; /* 🚫 sin scroll */
+  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -32,13 +31,13 @@ body{
 .container{
   max-width:900px;
   width:100%;
+  padding:2rem;
 }
 
 .content{
-  background:rgba(255,255,255,.06);
-  border-radius:var(--radius);
+  /* ✅ FONDO LISO */
+  background:rgba(0,0,0,0.55);
   padding:2rem;
-  backdrop-filter:blur(12px);
   text-align:center;
   max-height:90vh;
   overflow:hidden;
@@ -71,7 +70,7 @@ select option{color:#000}
   font-size:.95rem;
   opacity:.9;
   margin:1rem 0;
-  max-height:180px;        /* 📜 scroll interno */
+  max-height:180px;
   overflow-y:auto;
   padding-right:6px;
 }
@@ -166,8 +165,6 @@ footer{
 
 <script>
 const repo = "thiagowiegert/Mine-Api";
-const CACHE_KEY = "releasesCache";
-const CACHE_TIME = 6 * 60 * 60 * 1000;
 const LAST_SEEN = "lastSeenRelease";
 
 const selector = document.getElementById("selector");
@@ -176,23 +173,6 @@ const download = document.getElementById("download");
 const changelog = document.getElementById("changelog");
 const toast = document.getElementById("toast");
 
-async function getReleases(){
-  const cache = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
-  if(cache && Date.now() - cache.time < CACHE_TIME){
-    return cache.data;
-  }
-
-  const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
-  const data = await res.json();
-
-  localStorage.setItem(CACHE_KEY, JSON.stringify({
-    time: Date.now(),
-    data
-  }));
-
-  return data;
-}
-
 function showToast(){
   toast.style.display="block";
   setTimeout(()=>toast.style.display="none",5000);
@@ -200,7 +180,6 @@ function showToast(){
 
 function updateInfo(){
   const opt = selector.selectedOptions[0];
-
   download.href = opt.value;
   changelog.href = opt.dataset.html;
 
@@ -214,9 +193,10 @@ function updateInfo(){
 }
 
 async function load(){
-  const releases = await getReleases();
-  selector.innerHTML="";
+  const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
+  const releases = await res.json();
 
+  selector.innerHTML="";
   releases.forEach(r=>{
     const apk = r.assets.find(a=>a.name.endsWith(".apk"));
     if(!apk) return;
