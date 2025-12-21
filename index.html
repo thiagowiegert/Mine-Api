@@ -12,7 +12,6 @@
   --primary-dark:#2e7d32;
   --whatsapp:#25D366;
   --whatsapp-dark:#128C7E;
-  --bg:#292929;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -36,11 +35,12 @@ body{
 }
 
 .content{
-  background:var(--panel);
+  background:rgba(0,0,0,.55);
   padding:2rem;
   text-align:center;
   max-height:90vh;
   overflow:hidden;
+  border-radius:15px;
 }
 
 h1{
@@ -124,6 +124,12 @@ footer{
   font-weight:bold;
   display:none;
   z-index:999;
+  animation:fade 0.5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translate(-50%,20px)}
+  to{opacity:1;transform:translate(-50%,0)}
 }
 </style>
 </head>
@@ -174,8 +180,8 @@ const changelog = document.getElementById("changelog");
 const toast = document.getElementById("toast");
 
 function showToast(){
-  toast.style.display="block";
-  setTimeout(()=>toast.style.display="none",5000);
+  toast.style.display = "block";
+  setTimeout(() => toast.style.display = "none", 5000);
 }
 
 function updateInfo(){
@@ -189,26 +195,26 @@ function updateInfo(){
     📅 <strong>Fecha:</strong> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
     📝 <strong>Notas:</strong><br>${opt.dataset.notes}
   `;
-
-  localStorage.setItem(LAST_SEEN,opt.dataset.date);
 }
 
 async function load(){
   const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
   const releases = await res.json();
 
-  selector.innerHTML="";
-  releases.forEach(r=>{
-    const apk = r.assets.find(a=>a.name.endsWith(".apk"));
+  selector.innerHTML = "";
+
+  releases.forEach(r => {
+    const apk = r.assets.find(a => a.name.endsWith(".apk"));
     if(!apk) return;
 
     const op = document.createElement("option");
     op.textContent = r.name || r.tag_name;
     op.value = apk.browser_download_url;
-    op.dataset.size = (apk.size/1024/1024).toFixed(2)+" MB";
+    op.dataset.size = (apk.size / 1024 / 1024).toFixed(2) + " MB";
     op.dataset.date = r.published_at;
-    op.dataset.notes = (r.body||"Sin notas").replace(/\n/g,"<br>");
+    op.dataset.notes = (r.body || "Sin notas").replace(/\n/g,"<br>");
     op.dataset.html = r.html_url;
+
     selector.appendChild(op);
   });
 
@@ -221,7 +227,12 @@ async function load(){
   }
 }
 
-selector.addEventListener("change",updateInfo);
+download.addEventListener("click", () => {
+  const opt = selector.selectedOptions[0];
+  localStorage.setItem(LAST_SEEN, opt.dataset.date);
+});
+
+selector.addEventListener("change", updateInfo);
 load();
 </script>
 
