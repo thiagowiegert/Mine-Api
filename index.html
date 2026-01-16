@@ -12,7 +12,7 @@
   --primary-dark:#2e7d32;
   --whatsapp:#25D366;
   --whatsapp-dark:#128C7E;
-  --b
+  --panel:#1e1e1e;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -76,9 +76,7 @@ select option{color:#000}
   padding-right:6px;
 }
 
-.info::-webkit-scrollbar{
-  width:6px;
-}
+.info::-webkit-scrollbar{width:6px}
 .info::-webkit-scrollbar-thumb{
   background:var(--primary);
   border-radius:10px;
@@ -98,19 +96,13 @@ select option{color:#000}
 
 .btn:hover{background:var(--primary-dark)}
 
-.btn-whatsapp{
-  background:var(--whatsapp);
-}
-
-.btn-whatsapp:hover{
-  background:var(--whatsapp-dark);
-}
+.btn-whatsapp{background:var(--whatsapp)}
+.btn-whatsapp:hover{background:var(--whatsapp-dark)}
 
 footer{
   margin-top:1.5rem;
   font-size:.85rem;
   opacity:.6;
-  line-height:1.4rem;
 }
 
 .toast{
@@ -125,12 +117,6 @@ footer{
   font-weight:bold;
   display:none;
   z-index:999;
-  animation:fade 0.5s ease;
-}
-
-@keyframes fade{
-  from{opacity:0;transform:translate(-50%,20px)}
-  to{opacity:1;transform:translate(-50%,0)}
 }
 </style>
 </head>
@@ -153,7 +139,7 @@ footer{
 
     <div class="info" id="info">Selecciona una versión</div>
 
-    <a id="download" class="btn" href="#">Descargar APK</a>
+    <a id="download" class="btn" href="#" target="_blank">Descargar</a>
     <a id="changelog" class="btn" href="#" target="_blank">Ver changelog</a>
 
     <a href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
@@ -164,7 +150,7 @@ footer{
 
     <footer>
       © 2025 Minecraft Free<br>
-      Página v2.1
+      Página v2.2
     </footer>
 
   </div>
@@ -172,21 +158,15 @@ footer{
 
 <script>
 const repo = "thiagowiegert/Mine-Api";
-const LAST_SEEN = "lastSeenRelease";
 
 const selector = document.getElementById("selector");
 const info = document.getElementById("info");
 const download = document.getElementById("download");
 const changelog = document.getElementById("changelog");
-const toast = document.getElementById("toast");
-
-function showToast(){
-  toast.style.display = "block";
-  setTimeout(() => toast.style.display = "none", 5000);
-}
 
 function updateInfo(){
   const opt = selector.selectedOptions[0];
+  if(!opt) return;
 
   download.href = opt.value;
   changelog.href = opt.dataset.html;
@@ -199,39 +179,59 @@ function updateInfo(){
 }
 
 async function load(){
-  const res = await fetch(`https://api.github.com/repos/${repo}/releases`);
-  const releases = await res.json();
+  let ghReleases = [];
+  let json = null;
+
+  // GitHub (opcional)
+  try{
+    const r = await fetch(`https://api.github.com/repos/${repo}/releases`);
+    ghReleases = await r.json();
+  }catch(e){}
+
+  // JSON (principal)
+  try{
+    const r = await fetch("versions.json", { cache: "no-store" });
+    json = await r.json();
+  }catch(e){
+    info.textContent = "No se pudieron cargar versiones";
+    return;
+  }
 
   selector.innerHTML = "";
 
-  releases.forEach(r => {
-    const apk = r.assets.find(a => a.name.endsWith(".apk"));
-    if(!apk) return;
+  json.versions.forEach(v => {
+    const gh = ghReleases.find(r => r.tag_name === v.tag);
+
+    let link = v.download;
+
+    if(!link && gh){
+      const apk = gh.assets?.find(a => a.name.endsWith(".apk"));
+      if(apk) link = apk.browser_download_url;
+    }
+
+    if(!link) return;
 
     const op = document.createElement("option");
-    op.textContent = r.name || r.tag_name;
-    op.value = apk.browser_download_url;
-    op.dataset.size = (apk.size / 1024 / 1024).toFixed(2) + " MB";
-    op.dataset.date = r.published_at;
-    op.dataset.notes = (r.body || "Sin notas").replace(/\n/g,"<br>");
-    op.dataset.html = r.html_url;
+    op.textContent = v.name;
+    op.value = link;
+    op.dataset.size = gh?.assets?.find(a=>a.name.endsWith(".apk"))
+      ? (gh.assets.find(a=>a.name.endsWith(".apk")).size / 1024 / 1024).toFixed(2) + " MB"
+      : "Manual";
 
+    op.dataset.date = v.date;
+    op.dataset.notes = v.notes || "Sin notas";
+    op.dataset.html = v.changelog;
     selector.appendChild(op);
   });
 
+  if(selector.options.length === 0){
+    info.textContent = "No hay versiones disponibles";
+    return;
+  }
+
   selector.selectedIndex = 0;
   updateInfo();
-
-  const lastSeen = localStorage.getItem(LAST_SEEN);
-  if(!lastSeen || new Date(releases[0].published_at) > new Date(lastSeen)){
-    showToast();
-  }
 }
-
-download.addEventListener("click", () => {
-  const opt = selector.selectedOptions[0];
-  localStorage.setItem(LAST_SEEN, opt.dataset.date);
-});
 
 selector.addEventListener("change", updateInfo);
 load();
