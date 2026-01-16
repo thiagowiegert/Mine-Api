@@ -23,7 +23,6 @@ body{
   url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
   color:#fff;
   height:100vh;
-  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -39,8 +38,6 @@ body{
   background:var(--panel);
   padding:2rem;
   text-align:center;
-  max-height:90vh;
-  overflow:hidden;
   border-radius:15px;
 }
 
@@ -64,8 +61,6 @@ select{
   font-size:1rem;
 }
 
-select option{color:#000}
-
 .info{
   text-align:left;
   font-size:.95rem;
@@ -73,13 +68,6 @@ select option{color:#000}
   margin:1rem 0;
   max-height:180px;
   overflow-y:auto;
-  padding-right:6px;
-}
-
-.info::-webkit-scrollbar{width:6px}
-.info::-webkit-scrollbar-thumb{
-  background:var(--primary);
-  border-radius:10px;
 }
 
 .btn{
@@ -91,7 +79,6 @@ select option{color:#000}
   color:#fff;
   font-weight:bold;
   margin:.5rem 0;
-  transition:.2s;
 }
 
 .btn:hover{background:var(--primary-dark)}
@@ -104,26 +91,10 @@ footer{
   font-size:.85rem;
   opacity:.6;
 }
-
-.toast{
-  position:fixed;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  background:var(--primary);
-  color:#fff;
-  padding:12px 20px;
-  border-radius:20px;
-  font-weight:bold;
-  display:none;
-  z-index:999;
-}
 </style>
 </head>
 
 <body>
-
-<div class="toast" id="toast">🚀 Nueva versión disponible</div>
 
 <div class="container">
   <div class="content">
@@ -133,7 +104,7 @@ footer{
     <div class="version-box">
       <label>Selecciona una versión:</label>
       <select id="selector">
-        <option>Cargando versiones…</option>
+        <option>Cargando…</option>
       </select>
     </div>
 
@@ -150,7 +121,7 @@ footer{
 
     <footer>
       © 2025 Minecraft Free<br>
-      Página v2.2
+      Página v2.3
     </footer>
 
   </div>
@@ -158,7 +129,6 @@ footer{
 
 <script>
 const repo = "thiagowiegert/Mine-Api";
-
 const selector = document.getElementById("selector");
 const info = document.getElementById("info");
 const download = document.getElementById("download");
@@ -179,34 +149,39 @@ function updateInfo(){
 }
 
 async function load(){
-  let ghReleases = [];
-  let json = null;
+  let gh = [];
+  let json;
 
-  // GitHub (opcional)
+  // GitHub
   try{
     const r = await fetch(`https://api.github.com/repos/${repo}/releases`);
-    ghReleases = await r.json();
+    gh = await r.json();
   }catch(e){}
 
-  // JSON (principal)
-  try{
-    const r = await fetch("versions.json", { cache: "no-store" });
-    json = await r.json();
-  }catch(e){
-    info.textContent = "No se pudieron cargar versiones";
-    return;
-  }
+  // JSON
+  const r2 = await fetch("versions.json", { cache: "no-store" });
+  json = await r2.json();
 
   selector.innerHTML = "";
 
   json.versions.forEach(v => {
-    const gh = ghReleases.find(r => r.tag_name === v.tag);
+    const rel = gh.find(r => r.tag_name === v.tag);
 
-    let link = v.download;
+    let link = null;
+    let size = "Manual";
 
-    if(!link && gh){
-      const apk = gh.assets?.find(a => a.name.endsWith(".apk"));
-      if(apk) link = apk.browser_download_url;
+    // 1️⃣ PRIORIDAD: APK en GitHub
+    if(rel){
+      const apk = rel.assets?.find(a => a.name.endsWith(".apk"));
+      if(apk){
+        link = apk.browser_download_url;
+        size = (apk.size / 1024 / 1024).toFixed(2) + " MB";
+      }
+    }
+
+    // 2️⃣ Fallback: link manual
+    if(!link && v.download){
+      link = v.download;
     }
 
     if(!link) return;
@@ -214,13 +189,11 @@ async function load(){
     const op = document.createElement("option");
     op.textContent = v.name;
     op.value = link;
-    op.dataset.size = gh?.assets?.find(a=>a.name.endsWith(".apk"))
-      ? (gh.assets.find(a=>a.name.endsWith(".apk")).size / 1024 / 1024).toFixed(2) + " MB"
-      : "Manual";
-
+    op.dataset.size = size;
     op.dataset.date = v.date;
     op.dataset.notes = v.notes || "Sin notas";
     op.dataset.html = v.changelog;
+
     selector.appendChild(op);
   });
 
