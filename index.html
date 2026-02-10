@@ -8,42 +8,47 @@
 
 <style>
 :root{
-  --primary:#43a047;
+  --primary:#4caf50;
   --primary-dark:#2e7d32;
   --whatsapp:#25D366;
-  --whatsapp-dark:#128C7E;
-  --panel:#1e1e1e;
+  --panel:rgba(30,30,30,.75);
+  --border:rgba(255,255,255,.08);
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
   font-family:'Segoe UI',Roboto,sans-serif;
-  background:linear-gradient(rgba(0,0,0,.85),rgba(0,0,0,.6)),
-  url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
-  color:#fff;
-  height:100vh;
+  background:
+    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
+    url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
+  color:#fff;
 }
 
 .container{
   width:100%;
-  max-width:900px;
-  padding:2rem;
+  max-width:880px;
+  padding:1.5rem;
 }
 
 .content{
   background:var(--panel);
-  padding:2rem;
+  backdrop-filter:blur(12px);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:2.2rem;
+  box-shadow:0 25px 60px rgba(0,0,0,.6);
   text-align:center;
-  border-radius:15px;
 }
 
 h1{
+  font-size:2.2rem;
   color:var(--primary);
-  margin-bottom:1rem;
+  margin-bottom:1.5rem;
 }
 
 .version-box{
@@ -51,12 +56,18 @@ h1{
   margin-bottom:1rem;
 }
 
+label{
+  font-size:.9rem;
+  opacity:.85;
+}
+
 select{
   width:100%;
-  padding:.9rem;
-  border-radius:10px;
-  border:none;
-  background:#2a2a2a;
+  margin-top:.4rem;
+  padding:1rem;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#1f1f1f;
   color:#fff;
   font-size:1rem;
 }
@@ -64,31 +75,48 @@ select{
 .info{
   text-align:left;
   font-size:.95rem;
-  opacity:.9;
-  margin:1rem 0;
+  margin:1.2rem 0;
+  padding:1rem;
+  border-radius:14px;
+  background:#181818;
+  border:1px solid var(--border);
   max-height:180px;
   overflow-y:auto;
 }
 
-.btn{
-  display:block;
+.info::-webkit-scrollbar{
+  width:6px;
+}
+.info::-webkit-scrollbar-thumb{
   background:var(--primary);
-  padding:1rem;
   border-radius:10px;
-  text-decoration:none;
-  color:#fff;
-  font-weight:bold;
-  margin:.5rem 0;
 }
 
-.btn:hover{background:var(--primary-dark)}
+.btn{
+  display:block;
+  width:100%;
+  padding:1rem;
+  margin:.55rem 0;
+  border-radius:14px;
+  text-decoration:none;
+  font-weight:600;
+  color:#fff;
+  background:var(--primary);
+  transition:.25s;
+}
 
-.btn-whatsapp{background:var(--whatsapp)}
-.btn-whatsapp:hover{background:var(--whatsapp-dark)}
+.btn:hover{
+  background:var(--primary-dark);
+  transform:translateY(-2px);
+}
+
+.btn-whatsapp{
+  background:var(--whatsapp);
+}
 
 footer{
-  margin-top:1.5rem;
-  font-size:.85rem;
+  margin-top:1.6rem;
+  font-size:.8rem;
   opacity:.6;
 }
 </style>
@@ -102,26 +130,27 @@ footer{
     <h1>Mine-Api</h1>
 
     <div class="version-box">
-      <label>Selecciona una versión:</label>
+      <label>Selecciona una versión</label>
       <select id="selector">
         <option>Cargando…</option>
       </select>
     </div>
 
-    <div class="info" id="info">Selecciona una versión</div>
+    <div class="info" id="info">
+      Selecciona una versión para ver los detalles
+    </div>
 
-    <a id="download" class="btn" href="#" target="_blank">Descargar</a>
-    <a id="changelog" class="btn" href="#" target="_blank">Ver changelog</a>
+    <a id="download" class="btn" target="_blank">Descargar APK</a>
+    <a id="changelog" class="btn" target="_blank">Ver changelog</a>
 
-    <a href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
-       target="_blank"
-       class="btn btn-whatsapp">
+    <a class="btn btn-whatsapp"
+       href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
+       target="_blank">
        Canal de WhatsApp
     </a>
 
     <footer>
-      © 2025 Minecraft Free<br>
-      Página v2.3
+      © 2025 Minecraft Free · Página v2.5
     </footer>
 
   </div>
@@ -129,81 +158,59 @@ footer{
 
 <script>
 const repo = "thiagowiegert/Mine-Api";
-const selector = document.getElementById("selector");
-const info = document.getElementById("info");
-const download = document.getElementById("download");
+
+const selector  = document.getElementById("selector");
+const info      = document.getElementById("info");
+const download  = document.getElementById("download");
 const changelog = document.getElementById("changelog");
 
 function updateInfo(){
   const opt = selector.selectedOptions[0];
   if(!opt) return;
 
-  download.href = opt.value;
-  changelog.href = opt.dataset.html;
+  download.href  = opt.dataset.apk;
+  changelog.href = opt.dataset.url;
 
   info.innerHTML = `
-    📦 <strong>Tamaño:</strong> ${opt.dataset.size}<br>
-    📅 <strong>Fecha:</strong> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
-    📝 <strong>Notas:</strong><br>${opt.dataset.notes}
+    📦 <b>Tamaño:</b> ${opt.dataset.size}<br>
+    📅 <b>Fecha:</b> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
+    📝 <b>Notas:</b><br>${opt.dataset.notes}
   `;
 }
 
 async function load(){
-  let gh = [];
-  let json;
-
-  // GitHub
   try{
     const r = await fetch(`https://api.github.com/repos/${repo}/releases`);
-    gh = await r.json();
-  }catch(e){}
+    const releases = await r.json();
 
-  // JSON
-  const r2 = await fetch("versions.json", { cache: "no-store" });
-  json = await r2.json();
+    selector.innerHTML = "";
 
-  selector.innerHTML = "";
+    releases.forEach(rel=>{
+      const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
+      if(!apk) return;
 
-  json.versions.forEach(v => {
-    const rel = gh.find(r => r.tag_name === v.tag);
+      const op = document.createElement("option");
+      op.textContent   = rel.name || rel.tag_name;
+      op.dataset.apk   = apk.browser_download_url;
+      op.dataset.size  = (apk.size/1024/1024).toFixed(2)+" MB";
+      op.dataset.date  = rel.published_at;
+      op.dataset.notes = rel.body || "Sin notas";
+      op.dataset.url   = rel.html_url;
 
-    let link = null;
-    let size = "Manual";
+      selector.appendChild(op);
+    });
 
-    // 1️⃣ PRIORIDAD: APK en GitHub
-    if(rel){
-      const apk = rel.assets?.find(a => a.name.endsWith(".apk"));
-      if(apk){
-        link = apk.browser_download_url;
-        size = (apk.size / 1024 / 1024).toFixed(2) + " MB";
-      }
+    if(!selector.options.length){
+      info.textContent = "No hay versiones disponibles";
+      return;
     }
 
-    // 2️⃣ Fallback: link manual
-    if(!link && v.download){
-      link = v.download;
-    }
+    selector.selectedIndex = 0;
+    updateInfo();
 
-    if(!link) return;
-
-    const op = document.createElement("option");
-    op.textContent = v.name;
-    op.value = link;
-    op.dataset.size = size;
-    op.dataset.date = v.date;
-    op.dataset.notes = v.notes || "Sin notas";
-    op.dataset.html = v.changelog;
-
-    selector.appendChild(op);
-  });
-
-  if(selector.options.length === 0){
-    info.textContent = "No hay versiones disponibles";
-    return;
+  }catch(e){
+    info.textContent = "Error al cargar versiones";
   }
-
-  selector.selectedIndex = 0;
-  updateInfo();
 }
 
 selector.addEventListener("change", updateInfo);
