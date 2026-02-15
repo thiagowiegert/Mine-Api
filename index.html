@@ -129,6 +129,14 @@ footer{
 
     <h1>Mine-Api</h1>
 
+    <div id="updateStatus" style="
+  margin-bottom:1rem;
+  padding:.8rem;
+  border-radius:12px;
+  font-weight:600;
+  display:none;">
+</div>
+
     <div class="version-box">
       <label>Selecciona una versión</label>
       <select id="selector">
@@ -163,6 +171,25 @@ const selector  = document.getElementById("selector");
 const info      = document.getElementById("info");
 const download  = document.getElementById("download");
 const changelog = document.getElementById("changelog");
+const updateBox = document.getElementById("updateStatus");
+
+function getInstalledVersion(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("version");
+}
+
+function compareVersions(v1, v2){
+  const a = v1.replace("v","").split(".").map(Number);
+  const b = v2.replace("v","").split(".").map(Number);
+
+  for(let i=0;i<Math.max(a.length,b.length);i++){
+    const n1 = a[i] || 0;
+    const n2 = b[i] || 0;
+    if(n1 > n2) return 1;
+    if(n1 < n2) return -1;
+  }
+  return 0;
+}
 
 function updateInfo(){
   const opt = selector.selectedOptions[0];
@@ -185,9 +212,15 @@ async function load(){
 
     selector.innerHTML = "";
 
-    releases.forEach(rel=>{
+    let latestVersion = null;
+
+    releases.forEach((rel,index)=>{
       const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
       if(!apk) return;
+
+      if(index === 0){
+        latestVersion = rel.tag_name;
+      }
 
       const op = document.createElement("option");
       op.textContent   = rel.name || rel.tag_name;
@@ -207,6 +240,23 @@ async function load(){
 
     selector.selectedIndex = 0;
     updateInfo();
+
+    // 🔥 DETECCIÓN DE ACTUALIZACIÓN
+    const installed = getInstalledVersion();
+
+    if(installed && latestVersion){
+      const result = compareVersions(installed, latestVersion);
+
+      updateBox.style.display = "block";
+
+      if(result < 0){
+        updateBox.style.background = "#b71c1c";
+        updateBox.innerHTML = `🔴 Nueva versión disponible: <b>${latestVersion}</b>`;
+      } else {
+        updateBox.style.background = "#1b5e20";
+        updateBox.innerHTML = `🟢 Estás usando la última versión (${installed})`;
+      }
+    }
 
   }catch(e){
     info.textContent = "Error al cargar versiones";
