@@ -48,7 +48,15 @@ body{
 h1{
   font-size:2.2rem;
   color:var(--primary);
-  margin-bottom:1.5rem;
+  margin-bottom:1rem;
+}
+
+.update-status{
+  margin-bottom:1rem;
+  padding:.8rem;
+  border-radius:12px;
+  font-weight:600;
+  display:none;
 }
 
 .version-box{
@@ -129,13 +137,7 @@ footer{
 
     <h1>Mine-Api</h1>
 
-    <div id="updateStatus" style="
-  margin-bottom:1rem;
-  padding:.8rem;
-  border-radius:12px;
-  font-weight:600;
-  display:none;">
-</div>
+    <div id="updateStatus" class="update-status"></div>
 
     <div class="version-box">
       <label>Selecciona una versión</label>
@@ -158,7 +160,7 @@ footer{
     </a>
 
     <footer>
-      © 2025 Minecraft Free · Página v2.5
+      © 2025 Minecraft Free · Página v2.6
     </footer>
 
   </div>
@@ -173,23 +175,7 @@ const download  = document.getElementById("download");
 const changelog = document.getElementById("changelog");
 const updateBox = document.getElementById("updateStatus");
 
-function getInstalledVersion(){
-  const params = new URLSearchParams(window.location.search);
-  return params.get("version");
-}
-
-function compareVersions(v1, v2){
-  const a = v1.replace("v","").split(".").map(Number);
-  const b = v2.replace("v","").split(".").map(Number);
-
-  for(let i=0;i<Math.max(a.length,b.length);i++){
-    const n1 = a[i] || 0;
-    const n2 = b[i] || 0;
-    if(n1 > n2) return 1;
-    if(n1 < n2) return -1;
-  }
-  return 0;
-}
+let latestVersion = null;
 
 function updateInfo(){
   const opt = selector.selectedOptions[0];
@@ -198,11 +184,31 @@ function updateInfo(){
   download.href  = opt.dataset.apk;
   changelog.href = opt.dataset.url;
 
+  download.onclick = () => {
+    localStorage.setItem("lastDownloadedVersion", opt.dataset.version);
+  };
+
   info.innerHTML = `
     📦 <b>Tamaño:</b> ${opt.dataset.size}<br>
     📅 <b>Fecha:</b> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
     📝 <b>Notas:</b><br>${opt.dataset.notes}
   `;
+}
+
+function checkUpdate(){
+  const lastDownloaded = localStorage.getItem("lastDownloadedVersion");
+
+  if(!lastDownloaded || !latestVersion) return;
+
+  updateBox.style.display = "block";
+
+  if(lastDownloaded !== latestVersion){
+    updateBox.style.background = "#b71c1c";
+    updateBox.innerHTML = `🔴 Nueva versión disponible: <b>${latestVersion}</b>`;
+  } else {
+    updateBox.style.background = "#1b5e20";
+    updateBox.innerHTML = `🟢 Tienes la última versión (${latestVersion})`;
+  }
 }
 
 async function load(){
@@ -211,8 +217,6 @@ async function load(){
     const releases = await r.json();
 
     selector.innerHTML = "";
-
-    let latestVersion = null;
 
     releases.forEach((rel,index)=>{
       const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
@@ -223,12 +227,13 @@ async function load(){
       }
 
       const op = document.createElement("option");
-      op.textContent   = rel.name || rel.tag_name;
-      op.dataset.apk   = apk.browser_download_url;
-      op.dataset.size  = (apk.size/1024/1024).toFixed(2)+" MB";
-      op.dataset.date  = rel.published_at;
-      op.dataset.notes = rel.body || "Sin notas";
-      op.dataset.url   = rel.html_url;
+      op.textContent     = rel.name || rel.tag_name;
+      op.dataset.version = rel.tag_name;
+      op.dataset.apk     = apk.browser_download_url;
+      op.dataset.size    = (apk.size/1024/1024).toFixed(2)+" MB";
+      op.dataset.date    = rel.published_at;
+      op.dataset.notes   = rel.body || "Sin notas";
+      op.dataset.url     = rel.html_url;
 
       selector.appendChild(op);
     });
@@ -240,23 +245,7 @@ async function load(){
 
     selector.selectedIndex = 0;
     updateInfo();
-
-    // 🔥 DETECCIÓN DE ACTUALIZACIÓN
-    const installed = getInstalledVersion();
-
-    if(installed && latestVersion){
-      const result = compareVersions(installed, latestVersion);
-
-      updateBox.style.display = "block";
-
-      if(result < 0){
-        updateBox.style.background = "#b71c1c";
-        updateBox.innerHTML = `🔴 Nueva versión disponible: <b>${latestVersion}</b>`;
-      } else {
-        updateBox.style.background = "#1b5e20";
-        updateBox.innerHTML = `🟢 Estás usando la última versión (${installed})`;
-      }
-    }
+    checkUpdate();
 
   }catch(e){
     info.textContent = "Error al cargar versiones";
