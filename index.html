@@ -1,171 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Mine-Api</title>
-
-<style>
-:root{
-  --primary:#4caf50;
-  --primary-dark:#2e7d32;
-  --whatsapp:#25D366;
-  --panel:rgba(30,30,30,.75);
-  --border:rgba(255,255,255,.08);
-}
-
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'Segoe UI',Roboto,sans-serif;
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
-    url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:#fff;
-}
-
-.container{
-  width:100%;
-  max-width:880px;
-  padding:1.5rem;
-}
-
-.content{
-  background:var(--panel);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:2.2rem;
-  box-shadow:0 25px 60px rgba(0,0,0,.6);
-  text-align:center;
-}
-
-h1{
-  font-size:2.2rem;
-  color:var(--primary);
-  margin-bottom:1rem;
-}
-
-.update-status{
-  margin-bottom:1rem;
-  padding:.8rem;
-  border-radius:12px;
-  font-weight:600;
-  display:none;
-}
-
-.version-box{
-  text-align:left;
-  margin-bottom:1rem;
-}
-
-label{
-  font-size:.9rem;
-  opacity:.85;
-}
-
-select{
-  width:100%;
-  margin-top:.4rem;
-  padding:1rem;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:#1f1f1f;
-  color:#fff;
-  font-size:1rem;
-}
-
-.info{
-  text-align:left;
-  font-size:.95rem;
-  margin:1.2rem 0;
-  padding:1rem;
-  border-radius:14px;
-  background:#181818;
-  border:1px solid var(--border);
-  max-height:180px;
-  overflow-y:auto;
-}
-
-.info::-webkit-scrollbar{
-  width:6px;
-}
-.info::-webkit-scrollbar-thumb{
-  background:var(--primary);
-  border-radius:10px;
-}
-
-.btn{
-  display:block;
-  width:100%;
-  padding:1rem;
-  margin:.55rem 0;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:600;
-  color:#fff;
-  background:var(--primary);
-  transition:.25s;
-}
-
-.btn:hover{
-  background:var(--primary-dark);
-  transform:translateY(-2px);
-}
-
-.btn-whatsapp{
-  background:var(--whatsapp);
-}
-
-footer{
-  margin-top:1.6rem;
-  font-size:.8rem;
-  opacity:.6;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-  <div class="content">
-
-    <h1>Mine-Api</h1>
-
-    <div id="updateStatus" class="update-status"></div>
-
-    <div class="version-box">
-      <label>Selecciona una versión</label>
-      <select id="selector">
-        <option>Cargando…</option>
-      </select>
-    </div>
-
-    <div class="info" id="info">
-      Selecciona una versión para ver los detalles
-    </div>
-
-    <a id="download" class="btn" target="_blank">Descargar APK</a>
-    <a id="changelog" class="btn" target="_blank">Ver changelog</a>
-
-    <a class="btn btn-whatsapp"
-       href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
-       target="_blank">
-       Canal de WhatsApp
-    </a>
-
-    <footer>
-      © 2025 Minecraft Free · Página v2.6
-    </footer>
-
-  </div>
-</div>
-
 <script>
 const repo = "thiagowiegert/Mine-Api";
 
@@ -173,9 +5,11 @@ const selector  = document.getElementById("selector");
 const info      = document.getElementById("info");
 const download  = document.getElementById("download");
 const changelog = document.getElementById("changelog");
-const updateBox = document.getElementById("updateStatus");
 
-let latestVersion = null;
+function getVersionFromURL(){
+  const params = new URLSearchParams(window.location.search);
+  return params.get("version");
+}
 
 function updateInfo(){
   const opt = selector.selectedOptions[0];
@@ -184,10 +18,6 @@ function updateInfo(){
   download.href  = opt.dataset.apk;
   changelog.href = opt.dataset.url;
 
-  download.onclick = () => {
-    localStorage.setItem("lastDownloadedVersion", opt.dataset.version);
-  };
-
   info.innerHTML = `
     📦 <b>Tamaño:</b> ${opt.dataset.size}<br>
     📅 <b>Fecha:</b> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
@@ -195,45 +25,43 @@ function updateInfo(){
   `;
 }
 
-function checkUpdate(){
-  const lastDownloaded = localStorage.getItem("lastDownloadedVersion");
-
-  if(!lastDownloaded || !latestVersion) return;
-
-  updateBox.style.display = "block";
-
-  if(lastDownloaded !== latestVersion){
-    updateBox.style.background = "#b71c1c";
-    updateBox.innerHTML = `🔴 Nueva versión disponible: <b>${latestVersion}</b>`;
-  } else {
-    updateBox.style.background = "#1b5e20";
-    updateBox.innerHTML = `🟢 Tienes la última versión (${latestVersion})`;
-  }
-}
-
 async function load(){
   try{
     const r = await fetch(`https://api.github.com/repos/${repo}/releases`);
     const releases = await r.json();
 
+    const versionParam = getVersionFromURL();
+
+    // 🔥 Si viene ?version=...
+    if(versionParam){
+      const found = releases.find(rel =>
+        rel.tag_name.replace("v","") === versionParam.replace("v","")
+      );
+
+      if(found){
+        const apk = found.assets?.find(a=>a.name.endsWith(".apk"));
+        if(apk){
+          // Descarga inmediata
+          window.location.href = apk.browser_download_url;
+          return; // Detener ejecución
+        }
+      }
+    }
+
+    // 🔹 Si no hay versión en URL, cargar página normal
     selector.innerHTML = "";
 
-    releases.forEach((rel,index)=>{
+    releases.forEach(rel=>{
       const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
       if(!apk) return;
 
-      if(index === 0){
-        latestVersion = rel.tag_name;
-      }
-
       const op = document.createElement("option");
-      op.textContent     = rel.name || rel.tag_name;
-      op.dataset.version = rel.tag_name;
-      op.dataset.apk     = apk.browser_download_url;
-      op.dataset.size    = (apk.size/1024/1024).toFixed(2)+" MB";
-      op.dataset.date    = rel.published_at;
-      op.dataset.notes   = rel.body || "Sin notas";
-      op.dataset.url     = rel.html_url;
+      op.textContent   = rel.name || rel.tag_name;
+      op.dataset.apk   = apk.browser_download_url;
+      op.dataset.size  = (apk.size/1024/1024).toFixed(2)+" MB";
+      op.dataset.date  = rel.published_at;
+      op.dataset.notes = rel.body || "Sin notas";
+      op.dataset.url   = rel.html_url;
 
       selector.appendChild(op);
     });
@@ -245,7 +73,6 @@ async function load(){
 
     selector.selectedIndex = 0;
     updateInfo();
-    checkUpdate();
 
   }catch(e){
     info.textContent = "Error al cargar versiones";
@@ -255,6 +82,3 @@ async function load(){
 selector.addEventListener("change", updateInfo);
 load();
 </script>
-
-</body>
-</html>
