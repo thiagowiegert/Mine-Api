@@ -156,7 +156,7 @@ function getVersionFromURL(){
 }
 
 function normalize(v){
-  return v.replace(/^v/i,"").trim();
+  return v?.replace(/^v/i,"").trim();
 }
 
 function updateInfo(){
@@ -176,41 +176,24 @@ function updateInfo(){
 async function load(){
   try{
     const response = await fetch(`https://api.github.com/repos/${repo}/releases`);
-
-    if(!response.ok){
-      throw new Error("GitHub API error");
-    }
-
     const releases = await response.json();
 
-    if(!Array.isArray(releases)){
-      throw new Error("Invalid GitHub response");
-    }
+    const versionParam = normalize(getVersionFromURL());
+    let downloadTriggered = false;
 
-    const versionParam = getVersionFromURL();
-
-    // 🔥 AUTO DESCARGA SI EXISTE ?version=
-    if(versionParam){
-      const cleanParam = normalize(versionParam);
-
-      for(const rel of releases){
-        const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
-        if(!apk) continue;
-
-        if(normalize(rel.tag_name) === cleanParam){
-          window.location.href = apk.browser_download_url;
-          return;
-        }
-      }
-      // Si no encontró versión, continúa normal
-    }
-
-    // 🔹 Cargar selector normal
     selector.innerHTML = "";
 
     for(const rel of releases){
       const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
       if(!apk) continue;
+
+      const cleanTag = normalize(rel.tag_name);
+
+      // 🔥 Si coincide con ?version= descarga pero NO corta ejecución
+      if(versionParam && cleanTag === versionParam && !downloadTriggered){
+        window.open(apk.browser_download_url, "_self");
+        downloadTriggered = true;
+      }
 
       const op = document.createElement("option");
       op.textContent   = rel.name || rel.tag_name;
@@ -231,9 +214,8 @@ async function load(){
     selector.selectedIndex = 0;
     updateInfo();
 
-  }catch(error){
-    console.error(error);
-    info.textContent = "Error al cargar versiones desde GitHub.";
+  }catch(e){
+    info.textContent = "Error al cargar versiones";
   }
 }
 
