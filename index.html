@@ -1,227 +1,1017 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Mine API</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mine API | v5.0</title>
 
-<style>
-:root{
-  --primary:#4caf50;
-  --primary-dark:#2e7d32;
-  --whatsapp:#25D366;
-  --panel:rgba(30,30,30,.75);
-  --border:rgba(255,255,255,.08);
-}
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
 
-*{box-sizing:border-box;margin:0;padding:0}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body{
-  font-family:'Segoe UI',Roboto,sans-serif;
-  background:
-    linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.9)),
-    url('https://i.imgur.com/CFc3sKb.jpeg') center/cover fixed;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  color:#fff;
-}
+    :root {
+      --bg: #0a1a0a;
+      --bg-dark: #081608;
+      --panel: rgba(10, 25, 10, 0.7);
+      --panel-2: rgba(10, 30, 10, 0.6);
 
-.container{
-  width:100%;
-  max-width:880px;
-  padding:1.5rem;
-}
+      --green: #5aff8c;
+      --green-soft: rgba(90, 255, 140, 0.1);
+      --green-soft-2: rgba(90, 255, 140, 0.2);
+      --green-line: rgba(90, 255, 140, 0.3);
 
-.content{
-  background:var(--panel);
-  backdrop-filter:blur(12px);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:2.2rem;
-  box-shadow:0 25px 60px rgba(0,0,0,.6);
-  text-align:center;
-}
+      --text: #edf5e8;
+      --text-soft: #d0ffd0;
+      --text-muted: #8fbc8f;
 
-h1{
-  font-size:2.2rem;
-  color:var(--primary);
-  margin-bottom:1rem;
-}
+      --whatsapp: #25d366;
 
-.version-box{
-  text-align:left;
-  margin-bottom:1rem;
-}
+      --radius-xl: 40px;
+      --radius-lg: 30px;
+      --radius-md: 20px;
+      --radius-pill: 60px;
 
-select{
-  width:100%;
-  margin-top:.4rem;
-  padding:1rem;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:#1f1f1f;
-  color:#fff;
-  font-size:1rem;
-}
+      --shadow-main: 0 30px 40px -20px rgba(0, 0, 0, 0.8);
+      --shadow-green: 0 0 30px rgba(90, 255, 140, 0.25);
+      --max-width: 1200px;
+    }
 
-.info{
-  text-align:left;
-  font-size:.95rem;
-  margin:1.2rem 0;
-  padding:1rem;
-  border-radius:14px;
-  background:#181818;
-  border:1px solid var(--border);
-  max-height:180px;
-  overflow-y:auto;
-}
+    html,
+    body {
+      min-height: 100%;
+    }
 
-.btn{
-  display:block;
-  width:100%;
-  padding:1rem;
-  margin:.55rem 0;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:600;
-  color:#fff;
-  background:var(--primary);
-  transition:.25s;
-}
+    body {
+      background: #0a1a0a;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(90, 255, 140, 0.15) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(90, 255, 140, 0.1) 0%, transparent 35%),
+        linear-gradient(135deg, #0b1f0b 0%, #102010 100%);
+      font-family: "Space Grotesk", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      color: var(--text);
+      position: relative;
+      overflow-x: hidden;
+    }
 
-.btn:hover{
-  background:var(--primary-dark);
-  transform:translateY(-2px);
-}
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="%235aff8c" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="%235aff8c" stroke-width="0.5"/></svg>') repeat;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-.btn-whatsapp{
-  background:var(--whatsapp);
-}
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 2rem;
+      align-items: start;
+    }
 
-footer{
-  margin-top:1.6rem;
-  font-size:.8rem;
-  opacity:.6;
-}
-</style>
-</head>
+    .left-column {
+      transform: translateY(1.6rem);
+    }
 
-<body>
+    .title-block {
+      background: var(--panel-2);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--green-line);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 2rem;
+      box-shadow:
+        var(--shadow-main),
+        0 0 0 1px rgba(90, 255, 140, 0.2) inset;
+      transform: rotate(-1deg) skew(-1deg);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-<div class="container">
-  <div class="content">
+    .title-block:hover {
+      transform: rotate(0deg) skew(0deg) translateY(-5px);
+      box-shadow:
+        0 40px 60px -20px rgba(90, 255, 140, 0.25),
+        0 0 20px rgba(90, 255, 140, 0.25);
+    }
 
-    <h1>Mine API</h1>
+    h1 {
+      font-size: clamp(2.6rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 0.95;
+      background: linear-gradient(135deg, #fff 0%, #5aff8c 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+    }
 
-    <div class="version-box">
-      <select id="selector">
-        <option>Cargando…</option>
-      </select>
-    </div>
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
 
-    <div class="info" id="info">
-      Cargando versiones...
-    </div>
+    .badge {
+      background: rgba(90, 255, 140, 0.1);
+      border: 1px solid var(--green);
+      border-radius: 100px;
+      padding: 0.6rem 1.5rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(4px);
+      transition: 0.2s ease;
+    }
 
-    <a id="download" class="btn" target="_blank">Descargar APK</a>
-    <a id="changelog" class="btn" target="_blank">Ver changelog</a>
+    .badge i {
+      color: var(--green);
+    }
 
-    <a class="btn btn-whatsapp"
-       href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
-       target="_blank">
-       Canal de WhatsApp
-    </a>
+    .badge:hover {
+      background: var(--green);
+      color: #0a1a0a;
+      transform: scale(1.05);
+      box-shadow: 0 0 20px var(--green);
+    }
 
-    <footer>
-      © 2025 - 2026 Mine API · Página v1.0.1
-    </footer>
+    .badge:hover i {
+      color: #0a1a0a;
+    }
 
-  </div>
-</div>
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
 
-<script>
-const repo = "thiagowiegert/Mine-Api";
+    .version-block {
+      background: var(--panel);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--green);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: 0 20px 30px -10px #000, 0 0 30px rgba(90, 255, 140, 0.12);
+      transform: rotate(1deg) skew(1deg);
+      transition: 0.3s ease;
+      position: relative;
+      z-index: 30;
+    }
 
-const selector  = document.getElementById("selector");
-const info      = document.getElementById("info");
-const download  = document.getElementById("download");
-const changelog = document.getElementById("changelog");
+    .version-block:hover {
+      transform: rotate(0deg) skew(0deg);
+      box-shadow: 0 30px 40px -10px rgba(90, 255, 140, 0.25), 0 0 40px rgba(90, 255, 140, 0.2);
+    }
 
-function getVersionFromURL(){
-  const params = new URLSearchParams(window.location.search);
-  return params.get("version");
-}
+    .version-label {
+      display: block;
+      margin-bottom: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
 
-function normalize(v){
-  return v?.replace(/^v/i,"").trim();
-}
+    .version-label i {
+      color: var(--green);
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
 
-function updateInfo(){
-  const opt = selector.selectedOptions[0];
-  if(!opt) return;
+    .custom-select {
+      position: relative;
+      width: 100%;
+      z-index: 100;
+    }
 
-  download.href  = opt.dataset.apk;
-  changelog.href = opt.dataset.url;
+    .select-trigger {
+      width: 100%;
+      min-height: 58px;
+      padding: 1rem 1.2rem;
+      background: #0f2a0f;
+      border: 2px solid var(--green);
+      border-radius: var(--radius-pill);
+      color: #fff;
+      font-size: 1.02rem;
+      font-family: "Space Grotesk", sans-serif;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: 0.25s ease;
+      box-shadow: 0 0 15px rgba(90, 255, 140, 0.25);
+      position: relative;
+      z-index: 101;
+      user-select: none;
+    }
 
-  info.innerHTML = `
-    📦 <b>Tamaño:</b> ${opt.dataset.size}<br>
-    📅 <b>Fecha:</b> ${new Date(opt.dataset.date).toLocaleDateString()}<br><br>
-    📝 <b>Notas:</b><br>${opt.dataset.notes}
-  `;
-}
+    .select-trigger:hover {
+      background: #1a3a1a;
+      box-shadow: 0 0 25px var(--green);
+    }
 
-async function load(){
-  try{
-    const response = await fetch(`https://api.github.com/repos/${repo}/releases`);
-    const releases = await response.json();
+    .select-trigger:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(90, 255, 140, 0.18), 0 0 20px rgba(90, 255, 140, 0.2);
+    }
 
-    const versionParam = normalize(getVersionFromURL());
-    let downloadTriggered = false;
+    .selected-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
 
-    selector.innerHTML = "";
+    .select-trigger .arrow {
+      transition: transform 0.25s ease;
+      color: var(--green);
+      flex-shrink: 0;
+    }
 
-    for(const rel of releases){
-      const apk = rel.assets?.find(a=>a.name.endsWith(".apk"));
-      if(!apk) continue;
+    .select-trigger .arrow.open {
+      transform: rotate(180deg);
+    }
 
-      const cleanTag = normalize(rel.tag_name);
+    .select-options {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      right: 0;
+      background: #0f2a0f;
+      border: 2px solid var(--green);
+      border-radius: var(--radius-md);
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 999;
+      display: none;
+      box-shadow: 0 20px 30px #000, 0 0 30px rgba(90, 255, 140, 0.25);
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+      transform-origin: top center;
+      pointer-events: none;
+    }
 
-      // 🔥 Si coincide con ?version= descarga pero NO corta ejecución
-      if(versionParam && cleanTag === versionParam && !downloadTriggered){
-        window.open(apk.browser_download_url, "_self");
-        downloadTriggered = true;
+    .select-options.show {
+      display: block;
+      pointer-events: auto;
+      animation: dropdownIn 0.2s ease forwards;
+    }
+
+    .select-options.hide {
+      display: block;
+      pointer-events: none;
+      animation: dropdownOut 0.16s ease forwards;
+    }
+
+    @keyframes dropdownIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes dropdownOut {
+      from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+      }
+    }
+
+    .select-option {
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: 0.2s ease;
+      border-bottom: 1px solid rgba(90, 255, 140, 0.18);
+      color: #e0ffe0;
+    }
+
+    .select-option:last-child {
+      border-bottom: none;
+    }
+
+    .select-option:hover,
+    .select-option.active {
+      background: var(--green);
+      color: #0a1a0a;
+    }
+
+    .select-option.selected {
+      background: rgba(90, 255, 140, 0.12);
+      border-left: 4px solid var(--green);
+      padding-left: calc(1.2rem - 4px);
+    }
+
+    .info-block {
+      background: rgba(10, 25, 10, 0.6);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--green);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: 0 20px 30px -10px #000, 0 0 0 2px rgba(90, 255, 140, 0.12) inset;
+      position: relative;
+      z-index: 20;
+    }
+
+    .info-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: #fff;
+      border-bottom: 1px dashed rgba(90, 255, 140, 0.6);
+      padding-bottom: 1rem;
+    }
+
+    .info-header i {
+      color: var(--green);
+      font-size: 1.8rem;
+    }
+
+    .info-content {
+      background: #0a1f0a;
+      border-radius: var(--radius-md);
+      padding: 1.35rem;
+      border: 1px solid rgba(90, 255, 140, 0.25);
+      font-size: 1rem;
+      line-height: 1.8;
+      min-height: 180px;
+      max-height: 250px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--green) #0a1f0a;
+    }
+
+    .info-content::-webkit-scrollbar,
+    .select-options::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .info-content::-webkit-scrollbar-track,
+    .select-options::-webkit-scrollbar-track {
+      background: #0a1f0a;
+    }
+
+    .info-content::-webkit-scrollbar-thumb,
+    .select-options::-webkit-scrollbar-thumb {
+      background: var(--green);
+      border-radius: 10px;
+    }
+
+    .info-item {
+      margin-bottom: 1rem;
+    }
+
+    .info-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .info-label {
+      color: #fff;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 0.25rem;
+      text-transform: lowercase;
+    }
+
+    .notes {
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 56px;
+      padding: 1rem 0.7rem;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 0.92rem;
+      text-decoration: none;
+      transition: 0.25s ease;
+      border: 2px solid transparent;
+      cursor: pointer;
+      text-align: center;
+      background: transparent;
+      color: #fff;
+      border-color: var(--green);
+      box-shadow: 0 0 10px rgba(90, 255, 140, 0.25);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn i {
+      color: var(--green);
+      font-size: 1.05rem;
+    }
+
+    .btn:hover {
+      background: var(--green);
+      color: #0a1a0a;
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 30px var(--green);
+    }
+
+    .btn:hover i {
+      color: #0a1a0a;
+    }
+
+    .btn-whatsapp {
+      border-color: var(--whatsapp);
+      box-shadow: 0 0 10px rgba(37, 211, 102, 0.25);
+    }
+
+    .btn-whatsapp i {
+      color: var(--whatsapp);
+    }
+
+    .btn-whatsapp:hover {
+      background: var(--whatsapp);
+    }
+
+    .loader {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 1rem 0 0;
+      padding: 1rem;
+      border-radius: var(--radius-pill);
+      background: #0a1f0a;
+      border: 2px solid var(--green);
+      color: var(--green);
+      font-weight: 600;
+      text-align: center;
+      backdrop-filter: blur(4px);
+      animation: pulse 1.5s infinite;
+    }
+
+    .loader.show {
+      display: flex;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    .loader i {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      padding: 1.5rem;
+      border-top: 1px dashed rgba(90, 255, 140, 0.25);
+      position: relative;
+      word-break: break-word;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
 
-      const op = document.createElement("option");
-      op.textContent   = rel.name || rel.tag_name;
-      op.dataset.apk   = apk.browser_download_url;
-      op.dataset.size  = (apk.size/1024/1024).toFixed(2)+" MB";
-      op.dataset.date  = rel.published_at;
-      op.dataset.notes = rel.body || "Sin notas";
-      op.dataset.url   = rel.html_url;
+      .left-column {
+        transform: none;
+      }
 
-      selector.appendChild(op);
+      h1 {
+        font-size: 3.5rem;
+      }
+
+      .actions {
+        grid-template-columns: 1fr;
+      }
+
+      .title-block,
+      .version-block {
+        transform: none;
+      }
     }
 
-    if(!selector.options.length){
-      info.textContent = "No hay versiones disponibles";
-      return;
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem 0.8rem;
+        align-items: flex-start;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .badge-grid {
+        flex-direction: column;
+      }
+
+      .title-block,
+      .version-block,
+      .info-block {
+        padding: 1.2rem;
+        border-radius: 24px;
+      }
+
+      .select-trigger {
+        padding: 0.95rem 1rem;
+        font-size: 0.98rem;
+        min-height: 52px;
+      }
+
+      .select-option {
+        padding: 0.95rem 1rem;
+      }
+
+      .btn {
+        min-height: 52px;
+        font-size: 0.88rem;
+        padding: 0.9rem 0.7rem;
+      }
+
+      .info-content {
+        min-height: 150px;
+        max-height: 220px;
+        padding: 1rem;
+      }
     }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-column">
+      <div class="title-block">
+        <h1>MINE<br />API</h1>
+        <div class="badge-grid">
+          <span class="badge"><i class="fas fa-bolt"></i> ultra rápido</span>
+          <span class="badge"><i class="fas fa-shield-halved"></i> seguro</span>
+          <span class="badge"><i class="fas fa-infinity"></i> ilimitado</span>
+          <span class="badge"><i class="fas fa-code-branch"></i> open source</span>
+        </div>
+      </div>
+    </div>
 
-    selector.selectedIndex = 0;
-    updateInfo();
+    <div class="right-column">
+      <div class="version-block">
+        <div class="version-label">
+          <i class="fas fa-cube"></i> versión
+        </div>
 
-  }catch(e){
-    info.textContent = "Error al cargar versiones";
-  }
-}
+        <div class="custom-select" id="customSelect">
+          <div
+            class="select-trigger"
+            id="selectTrigger"
+            tabindex="0"
+            role="button"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+          >
+            <span class="selected-label" id="selectedText">Cargando versiones...</span>
+            <span class="arrow" id="selectArrow">▼</span>
+          </div>
+          <div
+            class="select-options"
+            id="selectOptions"
+            role="listbox"
+            aria-label="Versiones disponibles"
+          ></div>
+        </div>
+      </div>
 
-selector.addEventListener("change", updateInfo);
-load();
-</script>
+      <div class="info-block">
+        <div class="info-header">
+          <i class="fas fa-terminal"></i>
+          <span>información</span>
+        </div>
+        <div class="info-content" id="info">Selecciona una versión...</div>
+      </div>
 
+      <div class="actions">
+        <a id="download" class="btn" href="#" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-download"></i> APK
+        </a>
+        <a id="changelog" class="btn" href="#" target="_blank" rel="noopener noreferrer">
+          <i class="fas fa-list-ul"></i> cambios
+        </a>
+        <a
+          class="btn btn-whatsapp"
+          href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <i class="fab fa-whatsapp"></i> canal
+        </a>
+      </div>
+
+      <div class="loader" id="loader">
+        <i class="fas fa-spinner"></i>
+        <span>procesando...</span>
+      </div>
+    </div>
+
+    <footer>
+      <i class="fas fa-code-branch"></i> mine api · v5.0 
+      <i class="fas fa-download"></i>
+    </footer>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const repo = "thiagowiegert/Mine-Api";
+      const apiUrl = `https://api.github.com/repos/${repo}/releases`;
+
+      const elements = {
+        info: document.getElementById("info"),
+        download: document.getElementById("download"),
+        changelog: document.getElementById("changelog"),
+        loader: document.getElementById("loader"),
+        selectTrigger: document.getElementById("selectTrigger"),
+        selectOptions: document.getElementById("selectOptions"),
+        selectedText: document.getElementById("selectedText"),
+        selectArrow: document.getElementById("selectArrow")
+      };
+
+      let isOpen = false;
+      let isClosing = false;
+      let selectedIndex = -1;
+      let activeIndex = -1;
+      let versions = [];
+
+      const normalize = (value) => (value || "").replace(/^v/i, "").trim();
+
+      function getVersionFromURL() {
+        return normalize(new URLSearchParams(location.search).get("version"));
+      }
+
+      function formatDate(dateString) {
+        if (!dateString) return "fecha no disponible";
+
+        try {
+          return new Date(dateString).toLocaleDateString("es-ES", {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          });
+        } catch {
+          return "fecha no disponible";
+        }
+      }
+
+      function escapeHTML(str) {
+        return String(str).replace(/[&<>"']/g, (char) => {
+          const map = {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+          };
+          return map[char];
+        });
+      }
+
+      function formatNotes(notes) {
+        if (!notes || !notes.trim()) return "sin notas";
+        return notes.length > 900 ? notes.slice(0, 900) + "…" : notes;
+      }
+
+      function showLoader(show) {
+        elements.loader.classList.toggle("show", !!show);
+      }
+
+      function updateInfo(option) {
+        elements.info.innerHTML = `
+          <div class="info-item">
+            <span class="info-label"><i class="fas fa-weight-hanging"></i> tamaño</span>
+            <div>${escapeHTML(option.size)}</div>
+          </div>
+          <div class="info-item">
+            <span class="info-label"><i class="fas fa-calendar-alt"></i> fecha</span>
+            <div>${escapeHTML(formatDate(option.date))}</div>
+          </div>
+          <div class="info-item">
+            <span class="info-label"><i class="fas fa-pencil-alt"></i> notas</span>
+            <div class="notes">${escapeHTML(formatNotes(option.notes))}</div>
+          </div>
+        `;
+      }
+
+      function refreshOptionStates() {
+        const options = elements.selectOptions.querySelectorAll(".select-option");
+
+        options.forEach((option, index) => {
+          option.classList.toggle("selected", index === selectedIndex);
+          option.classList.toggle("active", index === activeIndex);
+          option.setAttribute("aria-selected", index === selectedIndex ? "true" : "false");
+        });
+      }
+
+      function openDropdown() {
+        if (isOpen && !isClosing) return;
+
+        isOpen = true;
+        isClosing = false;
+
+        elements.selectOptions.classList.remove("hide");
+        elements.selectOptions.style.display = "block";
+
+        requestAnimationFrame(() => {
+          elements.selectOptions.classList.add("show");
+        });
+
+        elements.selectArrow.classList.add("open");
+        elements.selectTrigger.setAttribute("aria-expanded", "true");
+      }
+
+      function closeDropdown() {
+        if (!isOpen || isClosing) return;
+
+        isOpen = false;
+        isClosing = true;
+
+        elements.selectOptions.classList.remove("show");
+        elements.selectOptions.classList.add("hide");
+
+        elements.selectArrow.classList.remove("open");
+        elements.selectTrigger.setAttribute("aria-expanded", "false");
+      }
+
+      function toggleDropdown() {
+        isOpen ? closeDropdown() : openDropdown();
+      }
+
+      function selectOption(index, focusBack = false) {
+        const option = versions[index];
+        if (!option) return;
+
+        selectedIndex = index;
+        activeIndex = index;
+
+        elements.selectedText.textContent = option.text;
+        elements.download.href = option.apk;
+        elements.changelog.href = option.url;
+
+        updateInfo(option);
+        refreshOptionStates();
+        closeDropdown();
+
+        if (focusBack) {
+          elements.selectTrigger.focus();
+        }
+      }
+
+      function renderOptions() {
+        elements.selectOptions.innerHTML = "";
+
+        versions.forEach((option, index) => {
+          const optionDiv = document.createElement("div");
+          optionDiv.className = "select-option";
+          optionDiv.textContent = option.text;
+          optionDiv.dataset.index = index;
+          optionDiv.setAttribute("role", "option");
+
+          optionDiv.addEventListener("click", (e) => {
+            e.stopPropagation();
+            selectOption(index, true);
+          });
+
+          elements.selectOptions.appendChild(optionDiv);
+        });
+
+        refreshOptionStates();
+      }
+
+      function moveActiveOption(direction) {
+        if (!versions.length) return;
+
+        if (!isOpen) openDropdown();
+
+        if (activeIndex < 0) {
+          activeIndex = selectedIndex >= 0 ? selectedIndex : 0;
+        } else {
+          activeIndex += direction;
+          if (activeIndex < 0) activeIndex = versions.length - 1;
+          if (activeIndex >= versions.length) activeIndex = 0;
+        }
+
+        refreshOptionStates();
+
+        const activeElement = elements.selectOptions.children[activeIndex];
+        if (activeElement) {
+          activeElement.scrollIntoView({ block: "nearest" });
+        }
+      }
+
+      function populateDropdown(releases) {
+        const versionParam = getVersionFromURL();
+        versions = [];
+
+        for (const rel of releases) {
+          if (!rel || rel.draft) continue;
+
+          const apk = Array.isArray(rel.assets)
+            ? rel.assets.find((asset) => asset.name.toLowerCase().endsWith(".apk"))
+            : null;
+
+          if (!apk) continue;
+
+          versions.push({
+            text: rel.name || rel.tag_name || "versión sin nombre",
+            tag: rel.tag_name || "",
+            apk: apk.browser_download_url,
+            size: ((apk.size || 0) / 1048576).toFixed(2) + " MB",
+            date: rel.published_at || rel.created_at || "",
+            notes: rel.body || "sin notas",
+            url: rel.html_url || "#"
+          });
+        }
+
+        if (!versions.length) {
+          elements.info.textContent = "❌ no hay versiones disponibles";
+          elements.selectedText.textContent = "sin versiones";
+          elements.download.removeAttribute("href");
+          elements.changelog.removeAttribute("href");
+          return;
+        }
+
+        renderOptions();
+
+        const matchIndex = versionParam
+          ? versions.findIndex((item) => normalize(item.tag) === versionParam)
+          : -1;
+
+        const finalIndex = matchIndex >= 0 ? matchIndex : 0;
+        selectOption(finalIndex);
+
+        if (matchIndex >= 0 && versions[finalIndex]?.apk) {
+          window.location.href = versions[finalIndex].apk;
+        }
+      }
+
+      async function load() {
+        showLoader(true);
+
+        try {
+          const res = await fetch(apiUrl, {
+            headers: {
+              Accept: "application/vnd.github+json"
+            }
+          });
+
+          if (!res.ok) {
+            throw new Error(`GitHub respondió con ${res.status}`);
+          }
+
+          const releases = await res.json();
+
+          if (!Array.isArray(releases)) {
+            throw new Error("respuesta inválida");
+          }
+
+          populateDropdown(releases);
+        } catch (error) {
+          console.error("Error cargando versiones:", error);
+          elements.info.textContent = "❌ error de conexión";
+          elements.selectedText.textContent = "error";
+        } finally {
+          showLoader(false);
+        }
+      }
+
+      elements.selectOptions.addEventListener("animationend", (e) => {
+        if (e.animationName === "dropdownOut") {
+          elements.selectOptions.classList.remove("hide");
+          elements.selectOptions.style.display = "none";
+          isClosing = false;
+        }
+      });
+
+      elements.selectTrigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+      });
+
+      elements.selectTrigger.addEventListener("keydown", (e) => {
+        switch (e.key) {
+          case "Enter":
+          case " ":
+            e.preventDefault();
+            toggleDropdown();
+            break;
+          case "ArrowDown":
+            e.preventDefault();
+            moveActiveOption(1);
+            break;
+          case "ArrowUp":
+            e.preventDefault();
+            moveActiveOption(-1);
+            break;
+          case "Escape":
+            if (isOpen) {
+              e.preventDefault();
+              closeDropdown();
+            }
+            break;
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (!isOpen) return;
+
+        switch (e.key) {
+          case "ArrowDown":
+            e.preventDefault();
+            moveActiveOption(1);
+            break;
+          case "ArrowUp":
+            e.preventDefault();
+            moveActiveOption(-1);
+            break;
+          case "Enter":
+            e.preventDefault();
+            if (activeIndex >= 0) {
+              selectOption(activeIndex, true);
+            }
+            break;
+          case "Escape":
+            e.preventDefault();
+            closeDropdown();
+            elements.selectTrigger.focus();
+            break;
+        }
+      });
+
+      document.addEventListener("click", (e) => {
+        if (
+          !elements.selectTrigger.contains(e.target) &&
+          !elements.selectOptions.contains(e.target)
+        ) {
+          closeDropdown();
+        }
+      });
+
+      load();
+    })();
+  </script>
 </body>
 </html>
