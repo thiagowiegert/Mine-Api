@@ -1,0 +1,103 @@
+[
+  {
+    "version": "1.21.131.1",
+    "peso": "588.88 MiB",
+    "fecha": "21 de diciembre de 2025",
+    "servidores": [
+      {
+        "nombre": "Dropbox",
+        "url": "https://ouo.io/EW1taX"
+      },
+      {
+        "nombre": "Files.fm",
+        "url": "https://ouo.io/bTwmGl"
+      },
+      {
+        "nombre": "Jottacloud",
+        "url": "https://ouo.io/kwCLrr"
+      },
+      {
+        "nombre": "Proton Drive",
+        "url": "https://ouo.io/oE7C6v"
+      }
+    ]
+  },
+
+
+
+  {
+    "version": "1.21.130.3",
+    "peso": "589.07 MiB",
+    "fecha": "12 de diciembre de 2025",
+    "servidores": [
+      {
+        "nombre": "Dropbox",
+        "url": "https://ouo.io/Iwle44"
+      },
+      {
+        "nombre": "Files.fm",
+        "url": "https://ouo.io/Aeo3F1A"
+      },
+      {
+        "nombre": "Jottacloud",
+        "url": "https://ouo.io/uLiiBN"
+      },
+      {
+        "nombre": "Proton Drive",
+        "url": "https://ouo.io/2NISwf"
+      },
+      {
+        "nombre": "OneDrive",
+        "url": "https://ouo.io/vF8CrB"
+      },
+      {
+        "nombre": "Icedrive",
+        "url": "https://ouo.io/JmkVq5"
+      },
+      {
+        "nombre": "Mediafire",
+        "url": "https://ouo.io/xY7JQL"
+      },
+      {
+        "nombre": "Google Drive",
+        "url": "https://ouo.io/MhVH18m"
+      },
+      {
+        "nombre": "Mega",
+        "url": "https://ouo.io/2DDvX6"
+      },
+      {
+        "nombre": "Upfiles",
+        "url": "https://upfiles.com/lwwi71X"
+      },
+      {
+        "nombre": "Dailyuploads",
+        "url": "https://ouo.io/IQU38q"
+      },
+      {
+        "nombre": "DropGalaxy",
+        "url": "https://ouo.io/ovMEaOB"
+      },
+      {
+        "nombre": "DlSurf",
+        "url": "https://ouo.io/xCr689"
+      },
+      {
+        "nombre": "Gofile",
+        "url": "https://ouo.io/sKTlQTl"
+      },
+      {
+        "nombre": "GitHub",
+        "url": "https://ouo.io/a3ANxE"
+      },
+      {
+        "nombre": "AWS",
+        "url": "https://ouo.io/NBZwsxd"
+      },
+      {
+        "nombre": "Mine API Server",
+        "url": "https://ouo.io/WjMDKr"
+      }
+    ]
+  }
+]
