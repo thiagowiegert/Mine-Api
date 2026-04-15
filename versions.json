@@ -50,12 +50,12 @@
     "fecha": "12 de diciembre de 2025",
     "servidores": [
       {
-        "nombre": "Dropbox",
-        "url": "https://ouo.io/Iwle44"
+          "nombre": "Dropbox",
+          "url": "https://ouo.io/Iwle44"
       },
       {
-        "nombre": "Files.fm",
-        "url": "https://ouo.io/Aeo3F1A"
+          "nombre": "Files.fm",
+          "url": "https://ouo.io/Aeo3F1A"
       },
       {
           "nombre": "Jottacloud",
