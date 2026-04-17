@@ -5,8 +5,8 @@
     "fecha": "",
     "servidores": [
       {
-        "nombre": "",
-        "url": ""
+        "nombre": "GitHub",
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"
       }
     ]
   },
