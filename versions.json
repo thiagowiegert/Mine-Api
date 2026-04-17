@@ -7,14 +7,6 @@
       {
           "nombre": "Servidor 1",
           "url": "https://ejemplo.com/1.apk"
-      },
-      {
-          "nombre": "Servidor 2",
-          "url": "https://ejemplo.com/2.apk"
-      },
-      {
-          "nombre": "Servidor 3",
-          "url": "https://ejemplo.com/3.apk"
       }
     ]
   },
