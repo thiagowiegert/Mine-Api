@@ -1,5 +1,16 @@
 [
   {
+    "version": "v26.10.4",
+    "peso": "",
+    "fecha": "",
+    "servidores": [
+      {
+        "nombre": "GitHub",
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.10.4/Minecraft_v1.26.10.4.apk"
+      }
+    ]
+  },
+  {
     "version": "v26.3.1",
     "peso": "",
     "fecha": "",
