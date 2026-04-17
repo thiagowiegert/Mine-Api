@@ -1,15 +1,23 @@
 [
   {
-    "version": "1.21.132.1",
-    "peso": "588.87MiB",
-    "fecha": "13 de enero de 2026",
+    "version": "1.21.90.25",
+    "peso": "249.80 MB",
+    "fecha": "12 de diciembre de 2025",
     "servidores": [
       {
-          "nombre": "Dropbox",
-          "url": "https://ouo.io/slQB72"
+          "nombre": "Servidor 1",
+          "url": "https://ejemplo.com/1.apk"
+      },
+      {
+          "nombre": "Servidor 2",
+          "url": "https://ejemplo.com/2.apk"
+      },
+      {
+          "nombre": "Servidor 3",
+          "url": "https://ejemplo.com/3.apk"
       }
     ]
-  },
+  }
 
 
 
