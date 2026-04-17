@@ -1,5 +1,16 @@
 [
-    {
+  {
+    "version": "v26.1.1",
+    "peso": "",
+    "fecha": "",
+    "servidores": [
+      {
+        "nombre": "",
+        "url": ""
+      }
+    ]
+  },
+  {
     "version": "v26.0.1",
     "peso": "881MB",
     "fecha": "15 de febrero de 2026",
