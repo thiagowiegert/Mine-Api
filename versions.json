@@ -5,164 +5,158 @@
     "fecha": "13 de enero de 2026",
     "servidores": [
       {
-          "nombre": "Dropbox",
-          "url": "https://ouo.io/slQB72"
+        "nombre": "Dropbox",
+        "url": "https://ouo.io/slQB72"
       }
     ]
   },
-
-
-
   {
     "version": "1.21.131.1",
     "peso": "588.88 MiB",
     "fecha": "21 de diciembre de 2025",
     "servidores": [
       {
-          "nombre": "Dropbox",
-          "url": "https://ouo.io/EW1taX"
+        "nombre": "Dropbox",
+        "url": "https://ouo.io/EW1taX"
       },
       {
-          "nombre": "Files.fm",
-          "url": "https://ouo.io/bTwmGl"
+        "nombre": "Files.fm",
+        "url": "https://ouo.io/bTwmGl"
       },
       {
-          "nombre": "Jottacloud",
-          "url": "https://ouo.io/kwCLrr"
+        "nombre": "Jottacloud",
+        "url": "https://ouo.io/kwCLrr"
       },
       {
-          "nombre": "Proton Drive",
-          "url": "https://ouo.io/oE7C6v"
+        "nombre": "Proton Drive",
+        "url": "https://ouo.io/oE7C6v"
       },
       {
-          "nombre": "OneDrive",
-          "url": "https://ouo.io/sZTIDD5"
+        "nombre": "OneDrive",
+        "url": "https://ouo.io/sZTIDD5"
       },
       {
-          "nombre": "Icedrive",
-          "url": "https://ouo.io/alUNijM"
+        "nombre": "Icedrive",
+        "url": "https://ouo.io/alUNijM"
       },
       {
-          "nombre": "Mediafire",
-          "url": "https://ouo.io/XHgve5"
+        "nombre": "Mediafire",
+        "url": "https://ouo.io/XHgve5"
       },
       {
-          "nombre": "Google Drive",
-          "url": "https://ouo.io/Dv8272"
+        "nombre": "Google Drive",
+        "url": "https://ouo.io/Dv8272"
       },
       {
-          "nombre": "Mega",
-          "url": "https://ouo.io/kF5lgM"
+        "nombre": "Mega",
+        "url": "https://ouo.io/kF5lgM"
       },
       {
-          "nombre": "Upfiles",
-          "url": "https://ouo.io/DaQnHnr"
+        "nombre": "Upfiles",
+        "url": "https://ouo.io/DaQnHnr"
       },
       {
-          "nombre": "Dailyuploads",
-          "url": "https://ouo.io/RLYTerp"
+        "nombre": "Dailyuploads",
+        "url": "https://ouo.io/RLYTerp"
       },
       {
-          "nombre": "DropGalaxy",
-          "url": "https://ouo.io/gSVaIe7"
+        "nombre": "DropGalaxy",
+        "url": "https://ouo.io/gSVaIe7"
       },
       {
-          "nombre": "DLSurf",
-          "url": "https://ouo.io/yD2Bhj"
+        "nombre": "DLSurf",
+        "url": "https://ouo.io/yD2Bhj"
       },
       {
-          "nombre": "Gofiles",
-          "url": "https://ouo.io/sKTlQTl"
+        "nombre": "Gofiles",
+        "url": "https://ouo.io/sKTlQTl"
       },
       {
-          "nombre": "GitHub",
-          "url": "https://ouo.io/lxYOM3"
+        "nombre": "GitHub",
+        "url": "https://ouo.io/lxYOM3"
       },
       {
-          "nombre": "AWS",
-          "url": "https://ouo.io/NBZwsxd"
+        "nombre": "AWS",
+        "url": "https://ouo.io/NBZwsxd"
       },
       {
-          "nombre": "Mine API Server",
-          "url": "https://ouo.io/faaINj"
+        "nombre": "Cloudflare",
+        "url": "https://ouo.io/faaINj"
       }
     ]
   },
-
-
-
   {
     "version": "1.21.130.3",
     "peso": "589.07 MiB",
     "fecha": "12 de diciembre de 2025",
     "servidores": [
       {
-          "nombre": "Dropbox",
-          "url": "https://ouo.io/Iwle44"
+        "nombre": "Dropbox",
+        "url": "https://ouo.io/Iwle44"
       },
       {
-          "nombre": "Files.fm",
-          "url": "https://ouo.io/Aeo3F1A"
+        "nombre": "Files.fm",
+        "url": "https://ouo.io/Aeo3F1A"
       },
       {
-          "nombre": "Jottacloud",
-          "url": "https://ouo.io/uLiiBN"
+        "nombre": "Jottacloud",
+        "url": "https://ouo.io/uLiiBN"
       },
       {
-          "nombre": "Proton Drive",
-          "url": "https://ouo.io/2NISwf"
+        "nombre": "Proton Drive",
+        "url": "https://ouo.io/2NISwf"
       },
       {
-          "nombre": "OneDrive",
-          "url": "https://ouo.io/vF8CrB"
+        "nombre": "OneDrive",
+        "url": "https://ouo.io/vF8CrB"
       },
       {
-          "nombre": "Icedrive",
-          "url": "https://ouo.io/JmkVq5"
+        "nombre": "Icedrive",
+        "url": "https://ouo.io/JmkVq5"
       },
       {
-          "nombre": "Mediafire",
-          "url": "https://ouo.io/xY7JQL"
+        "nombre": "Mediafire",
+        "url": "https://ouo.io/xY7JQL"
       },
       {
-          "nombre": "Google Drive",
-          "url": "https://ouo.io/MhVH18m"
+        "nombre": "Google Drive",
+        "url": "https://ouo.io/MhVH18m"
       },
       {
-          "nombre": "Mega",
-          "url": "https://ouo.io/2DDvX6"
+        "nombre": "Mega",
+        "url": "https://ouo.io/2DDvX6"
       },
       {
-          "nombre": "Upfiles",
-          "url": "https://ouo.io/LAlT9YQ"
+        "nombre": "Upfiles",
+        "url": "https://ouo.io/LAlT9YQ"
       },
       {
-            "nombre": "Dailyuploads",
-            "url": "https://ouo.io/IQU38q"
+        "nombre": "Dailyuploads",
+        "url": "https://ouo.io/IQU38q"
       },
       {
-            "nombre": "DropGalaxy",
-            "url": "https://ouo.io/ovMEaOB"
+        "nombre": "DropGalaxy",
+        "url": "https://ouo.io/ovMEaOB"
       },
       {
-          "nombre": "DlSurf",
-          "url": "https://ouo.io/xCr689"
+        "nombre": "DlSurf",
+        "url": "https://ouo.io/xCr689"
       },
       {
-          "nombre": "Gofile",
-          "url": "https://ouo.io/sKTlQTl"
+        "nombre": "Gofile",
+        "url": "https://ouo.io/sKTlQTl"
       },
       {
-          "nombre": "GitHub",
-          "url": "https://ouo.io/Kh9GOY"
+        "nombre": "GitHub",
+        "url": "https://ouo.io/Kh9GOY"
       },
       {
-          "nombre": "AWS",
-          "url": "https://ouo.io/NBZwsxd"
+        "nombre": "AWS",
+        "url": "https://ouo.io/NBZwsxd"
       },
       {
-          "nombre": "Mine API Server",
-          "url": "https://ouo.io/WjMDKr"
+        "nombre": "Mine API Server",
+        "url": "https://ouo.io/WjMDKr"
       }
     ]
   }
