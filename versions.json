@@ -11,6 +11,10 @@
       {
         "nombre": "Mediafire",
         "url": "https://www.mediafire.com/file/mb1eidrtjq7wvlv/Minecraft_v26.10.4.zip/file"
+      },
+      {
+        "nombre": "Google Drive",
+        "url": "https://drive.google.com/file/d/1_W6EjQu0nwO7l4Ib4QlQgk8KAW0BS0xY/view?usp=drivesdk"
       }
     ]
   },
