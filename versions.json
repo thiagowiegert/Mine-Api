@@ -39,6 +39,10 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.10.4/Minecraft_v1.26.10.4.apk"
+      },
+      {
+        "nombre": "AWS",
+        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.10.4.apk"
       }
     ]
   },
