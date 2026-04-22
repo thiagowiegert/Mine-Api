@@ -35,6 +35,10 @@
       {
         "nombre": "DLSurf",
         "url": "https://dl.surf/file/46e43a65"
+      },
+      {
+        "nombre": "GitHub",
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.10.4/Minecraft_v1.26.10.4.apk"
       }
     ]
   },
