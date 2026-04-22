@@ -78,6 +78,10 @@
       {
         "nombre": "DLSurf",
         "url": "https://dl.surf/file/d2afafa8"
+      },
+      {
+        "nombre": "GitHub",
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.3.1/Minecraft_v26.3.1.apk"
       }
     ]
   },
