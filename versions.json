@@ -414,8 +414,8 @@
     "fecha": "12 de diciembre de 2025",
     "servidores": [
       {
-        "nombre": "Dropbox",
-        "url": "https://www.dropbox.com/scl/fi/r0lu7ooifqxziaf58q9d8/Minecraft_v1.21.130.3.apk?rlkey=kanjjwlng8twhhidc48qqig28&st=20a5mu3n&dl=0"
+        "nombre": "Seleccionar Servidor",
+        "url": "#"
       },
       {
         "nombre": "Jottacloud",
