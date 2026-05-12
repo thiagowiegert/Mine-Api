@@ -414,10 +414,6 @@
     "fecha": "12 de diciembre de 2025",
     "servidores": [
       {
-        "nombre": "Seleccionar Servidor",
-        "url": "#"
-      },
-      {
         "nombre": "Jottacloud",
         "url": "https://jottacloud.com/s/364b0f446e526764a0d9e06f3d82c0ab0f3"
       },
