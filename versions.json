@@ -11,6 +11,10 @@
       {
         "nombre": "Mediafire",
         "url": "https://www.mediafire.com/file/nsmnm7u8fui4f0m/Minecraft_v26.20.22.zip/file"
+      },
+      {
+        "nombre": "Google Drive",
+        "url": "https://drive.google.com/file/d/1uc7A4-Gy4k1c4tTviUJ9-MmgQswXh3mp/view?usp=drivesdk"
       }
     ]
   },
