@@ -235,14 +235,6 @@
     "fecha": "15 de febrero de 2026",
     "servidores": [
       {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/3646900adb0f6bb4b08a9f2f2ee9cbfd8b0"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQBjoycBX6AhQKg5AhYpQRHrAbBs706PpYvzxI9DwOXuBKY"
-      },
-      {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/TuWfTzP3W5ZuYQGyZDRByuxxDDDW"
       },
@@ -285,18 +277,6 @@
     "peso": "588.87MiB",
     "fecha": "13 de enero de 2026",
     "servidores": [
-      {
-        "nombre": "Dropbox",
-        "url": "https://www.dropbox.com/scl/fi/0rvtu0il7wl8da7fy3zd4/Minecraft_v1.21.132.1.apk?rlkey=klh6p3jbw3ibfwia56j7ylr32&st=fhesyo1y&dl=0"
-      },
-      {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/3640894f56182aa4d84aa08559abaf720fe"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQAHGixZugyaSZurfBlGBMxsAfKwd8pyygCIrBBbSgnbtos"
-      },
       {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/FjkNPf4Qi9FQW1QYP3ZwNbzFbu8v"
