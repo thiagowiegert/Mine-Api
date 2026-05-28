@@ -133,14 +133,6 @@
     "fecha": "3 de marzo de 2026",
     "servidores": [
       {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/36493403d89bcf1457c9618f174ed09e145"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQDtQwTvUC_2QY_IBVNeIqrcAUWlpeCDmeLKNu94TG6WPiM"
-      },
-      {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/zVFZ9xvN61aGuTiDjxjZZ3CtRF3y"
       },
@@ -183,14 +175,6 @@
     "peso": "880.57MiB",
     "fecha": "23 de febrero de 2026",
     "servidores": [
-      {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/364ca7ac545257d4f809c788a36dc2d2f95"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQA5xAOYnaN-TpurAtbJbBNEAU-HriSg9FNzqYolVgszZ7I"
-      },
       {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/SYNt5PYuBva2bg6Z9GGaBi1QFy36"
