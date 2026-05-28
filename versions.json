@@ -42,6 +42,10 @@
       {
         "nombre": "AWS",
         "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.20.22.apk"
+      },
+      {
+        "nombre": "Mine API Server",
+        "url": ""
       }
     ]
   },
