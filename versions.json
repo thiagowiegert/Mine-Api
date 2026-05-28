@@ -341,18 +341,6 @@
     "fecha": "21 de diciembre de 2025",
     "servidores": [
       {
-        "nombre": "Dropbox",
-        "url": "https://www.dropbox.com/scl/fi/poklpujkkaanodv0ynvr7/Minecraft_v1.21.131.1.apk?rlkey=xpidffft29an0vdxccdhq3q6y&st=6xlpx0x4&dl=0"
-      },
-      {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/364a63b21d666c44ce3823ff26b80a45664"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQAqfnxFimohR5OvnV0IucCgARd4sq93IfLNMF5PTAC_9C0"
-      },
-      {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/whVC8AxXxzWavFfh7ZNYva9gzfZW"
       },
@@ -395,14 +383,6 @@
     "peso": "589.07 MiB",
     "fecha": "12 de diciembre de 2025",
     "servidores": [
-      {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/364b0f446e526764a0d9e06f3d82c0ab0f3"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQCAmpg9DZR8Q4CUfDfPTTxLAWkEI1y3A8ujPvtimew1DUE"
-      },
       {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/QibWQCiSG286w7BBt3BAtAkff15u"
