@@ -29,7 +29,8 @@
         "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.30.apk"
       },
       {
-        "nombre": "MineA"
+        "nombre": "Mine API Server",
+        "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.30.apk"
       }
     ]
   },
