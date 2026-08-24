@@ -30,7 +30,11 @@
       },
       {
         "nombre": "Mediafire",
-        "url": ""
+        "url": "https://www.mediafire.com/file/uldkcgtnjkhwmwd/Minecraft_v26.31.1.zip/file"
+      },
+      {
+        "nombre": "Google Drive",
+        "url": "https://drive.google.com/file/d/1sK9y8GviQLR5L-_8FA39UEQ2gE8dXWGi/view?usp=drivesdk"
       }
     ]
   },
