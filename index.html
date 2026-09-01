@@ -160,11 +160,15 @@ const INITIAL_DATA = [
   ]}
 ];
 
+const JSON_URL = "https://raw.githubusercontent.com/thiagowiegert/Mine-Api/refs/heads/main/versions.json";
+
 let state = {
-  versions: JSON.parse(JSON.stringify(INITIAL_DATA)),
+  versions: [],
   selected: 0,
   filter: "",
   toast: null,
+  loading: true,
+  loadError: "",
 };
 
 function uid() { return Math.random().toString(36).slice(2, 9); }
@@ -311,7 +315,9 @@ function buildDetail() {
 
   if (!v) {
     const empty = el("div", "text-sm text-[#aaa196]");
-    empty.textContent = "No hay versión seleccionada. Creá una nueva versión para empezar.";
+    empty.textContent = state.loading
+      ? "Cargando versions.json desde GitHub…"
+      : state.loadError || "No hay versión seleccionada. Creá una nueva versión para empezar.";
     wrap.appendChild(empty);
     return wrap;
   }
@@ -491,7 +497,49 @@ function openImportModal() {
   document.body.appendChild(overlay);
 }
 
-render();
+async function loadVersionsFromGitHub() {
+  state.loading = true;
+  state.loadError = "";
+  render();
+
+  try {
+    const response = await fetch(JSON_URL);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+      throw new Error("El JSON debe ser un array de versiones");
+    }
+
+    state.versions = data.map((item) => ({
+      version: item?.version || "",
+      peso: item?.peso || "",
+      fecha: item?.fecha || "",
+      servidores: Array.isArray(item?.servidores)
+        ? item.servidores.map((server) => ({
+            nombre: server?.nombre || "",
+            url: server?.url || "",
+          }))
+        : [],
+    }));
+    state.selected = 0;
+    showToast(`${state.versions.length} versión(es) cargada(s) desde GitHub`);
+  } catch (error) {
+    console.error("No se pudo cargar versions.json:", error);
+    state.versions = [];
+    state.selected = 0;
+    state.loadError = `No se pudo cargar el JSON de GitHub: ${error.message}`;
+  } finally {
+    state.loading = false;
+    render();
+  }
+}
+
+loadVersionsFromGitHub();
 </script>
 </body>
 </html>
