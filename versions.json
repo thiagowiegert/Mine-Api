@@ -361,7 +361,7 @@
       },
       {
         "nombre": "GitHub",
-        "url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"
       },
       {
         "nombre": "AWS",
@@ -405,111 +405,6 @@
       {
         "nombre": "Mine API Server",
         "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.0.2.apk"
-      }
-    ]
-  },
-  {
-    "version": "v1.21.132.1",
-    "peso": "588.87 MB",
-    "fecha": "8 de enero de 2026",
-    "servidores": [
-      {
-        "nombre": "Icedrive",
-        "url": "https://icedrive.net/s/FjkNPf4Qi9FQW1QYP3ZwNbzFbu8v"
-      },
-      {
-        "nombre": "Mediafire",
-        "url": "https://www.mediafire.com/file/y1rlabnltj6tmb9/Minecraft_v1.21.132.1.zip/file"
-      },
-      {
-        "nombre": "Google Drive",
-        "url": "https://drive.google.com/file/d/1uW-yXX-fiLaZ4eI8uGPejhjjHqnkAXNm/view?usp=drivesdk"
-      },
-      {
-        "nombre": "Mega",
-        "url": "https://mega.nz/file/4LEzjYjD#JZzy3UJCUj7KFlj1oPJB65i5L_CXCsA6F18tYx9iw2Q"
-      },
-      {
-        "nombre": "GitHub",
-        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v1.21.132.1/Minecraft_v1.21.132.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v1.21.132.1.apk"
-      },
-      {
-        "nombre": "Mine API Server",
-        "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v1.21.132.1.apk"
-      }
-    ]
-  },
-  {
-    "version": "v1.21.131.1",
-    "peso": "588.88 MB",
-    "fecha": "16 de diciembre de 2025",
-    "servidores": [
-      {
-        "nombre": "Icedrive",
-        "url": "https://icedrive.net/s/whVC8AxXxzWavFfh7ZNYva9gzfZW"
-      },
-      {
-        "nombre": "Mediafire",
-        "url": "https://www.mediafire.com/file/llq98w7v9vbun8f/Minecraft_v1.21.131.1.zip/file"
-      },
-      {
-        "nombre": "Google Drive",
-        "url": "https://drive.google.com/file/d/1mw_2iCYegzfwcklfAnuQCKb5rRw4_hEn/view?usp=drivesdk"
-      },
-      {
-        "nombre": "Mega",
-        "url": "https://mega.nz/file/RCkkyIRJ#hxndsyMphrFXGYpKIxFlQgvo4et_yJ379RTojYVbacs"
-      },
-      {
-        "nombre": "GitHub",
-        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v1.21.131.1/Minecraft_v1.21.131.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v1.21.131.1.apk"
-      },
-      {
-        "nombre": "Mine API Server",
-        "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v1.21.131.1.apk"
-      }
-    ]
-  },
-  {
-    "version": "v1.21.130.3",
-    "peso": "589.07 MB",
-    "fecha": "9 de diciembre de 2025",
-    "servidores": [
-      {
-        "nombre": "Icedrive",
-        "url": "https://icedrive.net/s/QibWQCiSG286w7BBt3BAtAkff15u"
-      },
-      {
-        "nombre": "Mediafire",
-        "url": "https://www.mediafire.com/file/fkm8167wr1k2xqk/Minecraft_v1.21.130.3.zip/file"
-      },
-      {
-        "nombre": "Google Drive",
-        "url": "https://drive.google.com/file/d/1SBpzTCgAgr-stDYEzMmGxebfXwkRQc67/view?usp=drivesdk"
-      },
-      {
-        "nombre": "Mega",
-        "url": "https://mega.nz/file/lOMAzZTT#weCB9CSmS4MedYF3dfZhaqQ3roWPAj-0zeShjiz52Es"
-      },
-      {
-        "nombre": "GitHub",
-        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v1.21.130.3/Minecraft_v1.21.130.3.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v1.21.130.3.apk"
-      },
-      {
-        "nombre": "Mine API Server",
-        "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v1.21.130.3.apk"
       }
     ]
   }
