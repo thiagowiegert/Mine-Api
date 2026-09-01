@@ -1,1017 +1,497 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mine API | v5.0</title>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-  />
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      --bg: #0a1a0a;
-      --bg-dark: #081608;
-      --panel: rgba(10, 25, 10, 0.7);
-      --panel-2: rgba(10, 30, 10, 0.6);
-
-      --green: #5aff8c;
-      --green-soft: rgba(90, 255, 140, 0.1);
-      --green-soft-2: rgba(90, 255, 140, 0.2);
-      --green-line: rgba(90, 255, 140, 0.3);
-
-      --text: #edf5e8;
-      --text-soft: #d0ffd0;
-      --text-muted: #8fbc8f;
-
-      --whatsapp: #25d366;
-
-      --radius-xl: 40px;
-      --radius-lg: 30px;
-      --radius-md: 20px;
-      --radius-pill: 60px;
-
-      --shadow-main: 0 30px 40px -20px rgba(0, 0, 0, 0.8);
-      --shadow-green: 0 0 30px rgba(90, 255, 140, 0.25);
-      --max-width: 1200px;
-    }
-
-    html,
-    body {
-      min-height: 100%;
-    }
-
-    body {
-      background: #0a1a0a;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(90, 255, 140, 0.15) 0%, transparent 30%),
-        radial-gradient(circle at 90% 80%, rgba(90, 255, 140, 0.1) 0%, transparent 35%),
-        linear-gradient(135deg, #0b1f0b 0%, #102010 100%);
-      font-family: "Space Grotesk", sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1rem;
-      color: var(--text);
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20 20 L80 20 L80 80 L20 80 Z" fill="none" stroke="%235aff8c" stroke-width="0.5"/><circle cx="50" cy="50" r="20" fill="none" stroke="%235aff8c" stroke-width="0.5"/></svg>') repeat;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
-      width: 100%;
-      max-width: var(--max-width);
-      position: relative;
-      z-index: 10;
-      display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .left-column {
-      transform: translateY(1.6rem);
-    }
-
-    .title-block {
-      background: var(--panel-2);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid var(--green-line);
-      border-radius: var(--radius-xl);
-      padding: 2.5rem 2rem;
-      box-shadow:
-        var(--shadow-main),
-        0 0 0 1px rgba(90, 255, 140, 0.2) inset;
-      transform: rotate(-1deg) skew(-1deg);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .title-block:hover {
-      transform: rotate(0deg) skew(0deg) translateY(-5px);
-      box-shadow:
-        0 40px 60px -20px rgba(90, 255, 140, 0.25),
-        0 0 20px rgba(90, 255, 140, 0.25);
-    }
-
-    h1 {
-      font-size: clamp(2.6rem, 8vw, 5rem);
-      font-weight: 700;
-      line-height: 0.95;
-      background: linear-gradient(135deg, #fff 0%, #5aff8c 80%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
-      letter-spacing: -2px;
-      text-transform: uppercase;
-    }
-
-    .badge-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      margin-top: 2rem;
-    }
-
-    .badge {
-      background: rgba(90, 255, 140, 0.1);
-      border: 1px solid var(--green);
-      border-radius: 100px;
-      padding: 0.6rem 1.5rem;
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      backdrop-filter: blur(4px);
-      transition: 0.2s ease;
-    }
-
-    .badge i {
-      color: var(--green);
-    }
-
-    .badge:hover {
-      background: var(--green);
-      color: #0a1a0a;
-      transform: scale(1.05);
-      box-shadow: 0 0 20px var(--green);
-    }
-
-    .badge:hover i {
-      color: #0a1a0a;
-    }
-
-    .right-column {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .version-block {
-      background: var(--panel);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--green);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      box-shadow: 0 20px 30px -10px #000, 0 0 30px rgba(90, 255, 140, 0.12);
-      transform: rotate(1deg) skew(1deg);
-      transition: 0.3s ease;
-      position: relative;
-      z-index: 30;
-    }
-
-    .version-block:hover {
-      transform: rotate(0deg) skew(0deg);
-      box-shadow: 0 30px 40px -10px rgba(90, 255, 140, 0.25), 0 0 40px rgba(90, 255, 140, 0.2);
-    }
-
-    .version-label {
-      display: block;
-      margin-bottom: 1.2rem;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-    }
-
-    .version-label i {
-      color: var(--green);
-      margin-right: 10px;
-      font-size: 1.3rem;
-    }
-
-    .custom-select {
-      position: relative;
-      width: 100%;
-      z-index: 100;
-    }
-
-    .select-trigger {
-      width: 100%;
-      min-height: 58px;
-      padding: 1rem 1.2rem;
-      background: #0f2a0f;
-      border: 2px solid var(--green);
-      border-radius: var(--radius-pill);
-      color: #fff;
-      font-size: 1.02rem;
-      font-family: "Space Grotesk", sans-serif;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      transition: 0.25s ease;
-      box-shadow: 0 0 15px rgba(90, 255, 140, 0.25);
-      position: relative;
-      z-index: 101;
-      user-select: none;
-    }
-
-    .select-trigger:hover {
-      background: #1a3a1a;
-      box-shadow: 0 0 25px var(--green);
-    }
-
-    .select-trigger:focus {
-      outline: none;
-      box-shadow: 0 0 0 4px rgba(90, 255, 140, 0.18), 0 0 20px rgba(90, 255, 140, 0.2);
-    }
-
-    .selected-label {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .select-trigger .arrow {
-      transition: transform 0.25s ease;
-      color: var(--green);
-      flex-shrink: 0;
-    }
-
-    .select-trigger .arrow.open {
-      transform: rotate(180deg);
-    }
-
-    .select-options {
-      position: absolute;
-      top: calc(100% + 10px);
-      left: 0;
-      right: 0;
-      background: #0f2a0f;
-      border: 2px solid var(--green);
-      border-radius: var(--radius-md);
-      max-height: 300px;
-      overflow-y: auto;
-      z-index: 999;
-      display: none;
-      box-shadow: 0 20px 30px #000, 0 0 30px rgba(90, 255, 140, 0.25);
-      opacity: 0;
-      transform: translateY(-8px) scale(0.98);
-      transform-origin: top center;
-      pointer-events: none;
-    }
-
-    .select-options.show {
-      display: block;
-      pointer-events: auto;
-      animation: dropdownIn 0.2s ease forwards;
-    }
-
-    .select-options.hide {
-      display: block;
-      pointer-events: none;
-      animation: dropdownOut 0.16s ease forwards;
-    }
-
-    @keyframes dropdownIn {
-      from {
-        opacity: 0;
-        transform: translateY(-8px) scale(0.98);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-    }
-
-    @keyframes dropdownOut {
-      from {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(-8px) scale(0.98);
-      }
-    }
-
-    .select-option {
-      padding: 1rem 1.2rem;
-      cursor: pointer;
-      transition: 0.2s ease;
-      border-bottom: 1px solid rgba(90, 255, 140, 0.18);
-      color: #e0ffe0;
-    }
-
-    .select-option:last-child {
-      border-bottom: none;
-    }
-
-    .select-option:hover,
-    .select-option.active {
-      background: var(--green);
-      color: #0a1a0a;
-    }
-
-    .select-option.selected {
-      background: rgba(90, 255, 140, 0.12);
-      border-left: 4px solid var(--green);
-      padding-left: calc(1.2rem - 4px);
-    }
-
-    .info-block {
-      background: rgba(10, 25, 10, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--green);
-      border-radius: var(--radius-lg);
-      padding: 2rem;
-      box-shadow: 0 20px 30px -10px #000, 0 0 0 2px rgba(90, 255, 140, 0.12) inset;
-      position: relative;
-      z-index: 20;
-    }
-
-    .info-header {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: #fff;
-      border-bottom: 1px dashed rgba(90, 255, 140, 0.6);
-      padding-bottom: 1rem;
-    }
-
-    .info-header i {
-      color: var(--green);
-      font-size: 1.8rem;
-    }
-
-    .info-content {
-      background: #0a1f0a;
-      border-radius: var(--radius-md);
-      padding: 1.35rem;
-      border: 1px solid rgba(90, 255, 140, 0.25);
-      font-size: 1rem;
-      line-height: 1.8;
-      min-height: 180px;
-      max-height: 250px;
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--green) #0a1f0a;
-    }
-
-    .info-content::-webkit-scrollbar,
-    .select-options::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .info-content::-webkit-scrollbar-track,
-    .select-options::-webkit-scrollbar-track {
-      background: #0a1f0a;
-    }
-
-    .info-content::-webkit-scrollbar-thumb,
-    .select-options::-webkit-scrollbar-thumb {
-      background: var(--green);
-      border-radius: 10px;
-    }
-
-    .info-item {
-      margin-bottom: 1rem;
-    }
-
-    .info-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .info-label {
-      color: #fff;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 0.25rem;
-      text-transform: lowercase;
-    }
-
-    .notes {
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      min-height: 56px;
-      padding: 1rem 0.7rem;
-      border-radius: var(--radius-pill);
-      font-weight: 700;
-      font-size: 0.92rem;
-      text-decoration: none;
-      transition: 0.25s ease;
-      border: 2px solid transparent;
-      cursor: pointer;
-      text-align: center;
-      background: transparent;
-      color: #fff;
-      border-color: var(--green);
-      box-shadow: 0 0 10px rgba(90, 255, 140, 0.25);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .btn i {
-      color: var(--green);
-      font-size: 1.05rem;
-    }
-
-    .btn:hover {
-      background: var(--green);
-      color: #0a1a0a;
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 0 30px var(--green);
-    }
-
-    .btn:hover i {
-      color: #0a1a0a;
-    }
-
-    .btn-whatsapp {
-      border-color: var(--whatsapp);
-      box-shadow: 0 0 10px rgba(37, 211, 102, 0.25);
-    }
-
-    .btn-whatsapp i {
-      color: var(--whatsapp);
-    }
-
-    .btn-whatsapp:hover {
-      background: var(--whatsapp);
-    }
-
-    .loader {
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin: 1rem 0 0;
-      padding: 1rem;
-      border-radius: var(--radius-pill);
-      background: #0a1f0a;
-      border: 2px solid var(--green);
-      color: var(--green);
-      font-weight: 600;
-      text-align: center;
-      backdrop-filter: blur(4px);
-      animation: pulse 1.5s infinite;
-    }
-
-    .loader.show {
-      display: flex;
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.7;
-      }
-    }
-
-    .loader i {
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    footer {
-      grid-column: 1 / -1;
-      margin-top: 2rem;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      padding: 1.5rem;
-      border-top: 1px dashed rgba(90, 255, 140, 0.25);
-      position: relative;
-      word-break: break-word;
-    }
-
-    @media (max-width: 900px) {
-      .container {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-
-      .left-column {
-        transform: none;
-      }
-
-      h1 {
-        font-size: 3.5rem;
-      }
-
-      .actions {
-        grid-template-columns: 1fr;
-      }
-
-      .title-block,
-      .version-block {
-        transform: none;
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 1rem 0.8rem;
-        align-items: flex-start;
-      }
-
-      h1 {
-        font-size: 2.5rem;
-      }
-
-      .badge-grid {
-        flex-direction: column;
-      }
-
-      .title-block,
-      .version-block,
-      .info-block {
-        padding: 1.2rem;
-        border-radius: 24px;
-      }
-
-      .select-trigger {
-        padding: 0.95rem 1rem;
-        font-size: 0.98rem;
-        min-height: 52px;
-      }
-
-      .select-option {
-        padding: 0.95rem 1rem;
-      }
-
-      .btn {
-        min-height: 52px;
-        font-size: 0.88rem;
-        padding: 0.9rem 0.7rem;
-      }
-
-      .info-content {
-        min-height: 150px;
-        max-height: 220px;
-        padding: 1rem;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mine API — Admin Panel</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<style>
+  body { font-family: 'Space Grotesk', sans-serif; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: #171310; }
+  ::-webkit-scrollbar-thumb { background: #4a433d; }
+  ::-webkit-scrollbar-thumb:hover { background: #7ccf4c; }
+  textarea { resize: none; }
+</style>
 </head>
-<body>
-  <div class="container">
-    <div class="left-column">
-      <div class="title-block">
-        <h1>MINE<br />API</h1>
-        <div class="badge-grid">
-          <span class="badge"><i class="fas fa-bolt"></i> ultra rápido</span>
-          <span class="badge"><i class="fas fa-shield-halved"></i> seguro</span>
-          <span class="badge"><i class="fas fa-infinity"></i> ilimitado</span>
-          <span class="badge"><i class="fas fa-code-branch"></i> open source</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="right-column">
-      <div class="version-block">
-        <div class="version-label">
-          <i class="fas fa-cube"></i> versión
-        </div>
-
-        <div class="custom-select" id="customSelect">
-          <div
-            class="select-trigger"
-            id="selectTrigger"
-            tabindex="0"
-            role="button"
-            aria-haspopup="listbox"
-            aria-expanded="false"
-          >
-            <span class="selected-label" id="selectedText">Cargando versiones...</span>
-            <span class="arrow" id="selectArrow">▼</span>
-          </div>
-          <div
-            class="select-options"
-            id="selectOptions"
-            role="listbox"
-            aria-label="Versiones disponibles"
-          ></div>
-        </div>
-      </div>
-
-      <div class="info-block">
-        <div class="info-header">
-          <i class="fas fa-terminal"></i>
-          <span>información</span>
-        </div>
-        <div class="info-content" id="info">Selecciona una versión...</div>
-      </div>
-
-      <div class="actions">
-        <a id="download" class="btn" href="#" target="_blank" rel="noopener noreferrer">
-          <i class="fas fa-download"></i> APK
-        </a>
-        <a id="changelog" class="btn" href="#" target="_blank" rel="noopener noreferrer">
-          <i class="fas fa-list-ul"></i> cambios
-        </a>
-        <a
-          class="btn btn-whatsapp"
-          href="https://whatsapp.com/channel/0029Vb6os8sEquiSiC9mHw1M"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <i class="fab fa-whatsapp"></i> canal
-        </a>
-      </div>
-
-      <div class="loader" id="loader">
-        <i class="fas fa-spinner"></i>
-        <span>procesando...</span>
-      </div>
-    </div>
-
-    <footer>
-      <i class="fas fa-code-branch"></i> mine api · v5.0 
-      <i class="fas fa-download"></i>
-    </footer>
-  </div>
-
-  <script>
-    (() => {
-      "use strict";
-
-      const repo = "thiagowiegert/Mine-Api";
-      const apiUrl = `https://api.github.com/repos/${repo}/releases`;
-
-      const elements = {
-        info: document.getElementById("info"),
-        download: document.getElementById("download"),
-        changelog: document.getElementById("changelog"),
-        loader: document.getElementById("loader"),
-        selectTrigger: document.getElementById("selectTrigger"),
-        selectOptions: document.getElementById("selectOptions"),
-        selectedText: document.getElementById("selectedText"),
-        selectArrow: document.getElementById("selectArrow")
-      };
-
-      let isOpen = false;
-      let isClosing = false;
-      let selectedIndex = -1;
-      let activeIndex = -1;
-      let versions = [];
-
-      const normalize = (value) => (value || "").replace(/^v/i, "").trim();
-
-      function getVersionFromURL() {
-        return normalize(new URLSearchParams(location.search).get("version"));
-      }
-
-      function formatDate(dateString) {
-        if (!dateString) return "fecha no disponible";
-
-        try {
-          return new Date(dateString).toLocaleDateString("es-ES", {
-            year: "numeric",
-            month: "long",
-            day: "numeric"
-          });
-        } catch {
-          return "fecha no disponible";
-        }
-      }
-
-      function escapeHTML(str) {
-        return String(str).replace(/[&<>"']/g, (char) => {
-          const map = {
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#39;"
-          };
-          return map[char];
-        });
-      }
-
-      function formatNotes(notes) {
-        if (!notes || !notes.trim()) return "sin notas";
-        return notes.length > 900 ? notes.slice(0, 900) + "…" : notes;
-      }
-
-      function showLoader(show) {
-        elements.loader.classList.toggle("show", !!show);
-      }
-
-      function updateInfo(option) {
-        elements.info.innerHTML = `
-          <div class="info-item">
-            <span class="info-label"><i class="fas fa-weight-hanging"></i> tamaño</span>
-            <div>${escapeHTML(option.size)}</div>
-          </div>
-          <div class="info-item">
-            <span class="info-label"><i class="fas fa-calendar-alt"></i> fecha</span>
-            <div>${escapeHTML(formatDate(option.date))}</div>
-          </div>
-          <div class="info-item">
-            <span class="info-label"><i class="fas fa-pencil-alt"></i> notas</span>
-            <div class="notes">${escapeHTML(formatNotes(option.notes))}</div>
-          </div>
-        `;
-      }
-
-      function refreshOptionStates() {
-        const options = elements.selectOptions.querySelectorAll(".select-option");
-
-        options.forEach((option, index) => {
-          option.classList.toggle("selected", index === selectedIndex);
-          option.classList.toggle("active", index === activeIndex);
-          option.setAttribute("aria-selected", index === selectedIndex ? "true" : "false");
-        });
-      }
-
-      function openDropdown() {
-        if (isOpen && !isClosing) return;
-
-        isOpen = true;
-        isClosing = false;
-
-        elements.selectOptions.classList.remove("hide");
-        elements.selectOptions.style.display = "block";
-
-        requestAnimationFrame(() => {
-          elements.selectOptions.classList.add("show");
-        });
-
-        elements.selectArrow.classList.add("open");
-        elements.selectTrigger.setAttribute("aria-expanded", "true");
-      }
-
-      function closeDropdown() {
-        if (!isOpen || isClosing) return;
-
-        isOpen = false;
-        isClosing = true;
-
-        elements.selectOptions.classList.remove("show");
-        elements.selectOptions.classList.add("hide");
-
-        elements.selectArrow.classList.remove("open");
-        elements.selectTrigger.setAttribute("aria-expanded", "false");
-      }
-
-      function toggleDropdown() {
-        isOpen ? closeDropdown() : openDropdown();
-      }
-
-      function selectOption(index, focusBack = false) {
-        const option = versions[index];
-        if (!option) return;
-
-        selectedIndex = index;
-        activeIndex = index;
-
-        elements.selectedText.textContent = option.text;
-        elements.download.href = option.apk;
-        elements.changelog.href = option.url;
-
-        updateInfo(option);
-        refreshOptionStates();
-        closeDropdown();
-
-        if (focusBack) {
-          elements.selectTrigger.focus();
-        }
-      }
-
-      function renderOptions() {
-        elements.selectOptions.innerHTML = "";
-
-        versions.forEach((option, index) => {
-          const optionDiv = document.createElement("div");
-          optionDiv.className = "select-option";
-          optionDiv.textContent = option.text;
-          optionDiv.dataset.index = index;
-          optionDiv.setAttribute("role", "option");
-
-          optionDiv.addEventListener("click", (e) => {
-            e.stopPropagation();
-            selectOption(index, true);
-          });
-
-          elements.selectOptions.appendChild(optionDiv);
-        });
-
-        refreshOptionStates();
-      }
-
-      function moveActiveOption(direction) {
-        if (!versions.length) return;
-
-        if (!isOpen) openDropdown();
-
-        if (activeIndex < 0) {
-          activeIndex = selectedIndex >= 0 ? selectedIndex : 0;
-        } else {
-          activeIndex += direction;
-          if (activeIndex < 0) activeIndex = versions.length - 1;
-          if (activeIndex >= versions.length) activeIndex = 0;
-        }
-
-        refreshOptionStates();
-
-        const activeElement = elements.selectOptions.children[activeIndex];
-        if (activeElement) {
-          activeElement.scrollIntoView({ block: "nearest" });
-        }
-      }
-
-      function populateDropdown(releases) {
-        const versionParam = getVersionFromURL();
-        versions = [];
-
-        for (const rel of releases) {
-          if (!rel || rel.draft) continue;
-
-          const apk = Array.isArray(rel.assets)
-            ? rel.assets.find((asset) => asset.name.toLowerCase().endsWith(".apk"))
-            : null;
-
-          if (!apk) continue;
-
-          versions.push({
-            text: rel.name || rel.tag_name || "versión sin nombre",
-            tag: rel.tag_name || "",
-            apk: apk.browser_download_url,
-            size: ((apk.size || 0) / 1048576).toFixed(2) + " MB",
-            date: rel.published_at || rel.created_at || "",
-            notes: rel.body || "sin notas",
-            url: rel.html_url || "#"
-          });
-        }
-
-        if (!versions.length) {
-          elements.info.textContent = "❌ no hay versiones disponibles";
-          elements.selectedText.textContent = "sin versiones";
-          elements.download.removeAttribute("href");
-          elements.changelog.removeAttribute("href");
-          return;
-        }
-
-        renderOptions();
-
-        const matchIndex = versionParam
-          ? versions.findIndex((item) => normalize(item.tag) === versionParam)
-          : -1;
-
-        const finalIndex = matchIndex >= 0 ? matchIndex : 0;
-        selectOption(finalIndex);
-
-        if (matchIndex >= 0 && versions[finalIndex]?.apk) {
-          window.location.href = versions[finalIndex].apk;
-        }
-      }
-
-      async function load() {
-        showLoader(true);
-
-        try {
-          const res = await fetch(apiUrl, {
-            headers: {
-              Accept: "application/vnd.github+json"
-            }
-          });
-
-          if (!res.ok) {
-            throw new Error(`GitHub respondió con ${res.status}`);
-          }
-
-          const releases = await res.json();
-
-          if (!Array.isArray(releases)) {
-            throw new Error("respuesta inválida");
-          }
-
-          populateDropdown(releases);
-        } catch (error) {
-          console.error("Error cargando versiones:", error);
-          elements.info.textContent = "❌ error de conexión";
-          elements.selectedText.textContent = "error";
-        } finally {
-          showLoader(false);
-        }
-      }
-
-      elements.selectOptions.addEventListener("animationend", (e) => {
-        if (e.animationName === "dropdownOut") {
-          elements.selectOptions.classList.remove("hide");
-          elements.selectOptions.style.display = "none";
-          isClosing = false;
-        }
-      });
-
-      elements.selectTrigger.addEventListener("click", (e) => {
-        e.stopPropagation();
-        toggleDropdown();
-      });
-
-      elements.selectTrigger.addEventListener("keydown", (e) => {
-        switch (e.key) {
-          case "Enter":
-          case " ":
-            e.preventDefault();
-            toggleDropdown();
-            break;
-          case "ArrowDown":
-            e.preventDefault();
-            moveActiveOption(1);
-            break;
-          case "ArrowUp":
-            e.preventDefault();
-            moveActiveOption(-1);
-            break;
-          case "Escape":
-            if (isOpen) {
-              e.preventDefault();
-              closeDropdown();
-            }
-            break;
-        }
-      });
-
-      document.addEventListener("keydown", (e) => {
-        if (!isOpen) return;
-
-        switch (e.key) {
-          case "ArrowDown":
-            e.preventDefault();
-            moveActiveOption(1);
-            break;
-          case "ArrowUp":
-            e.preventDefault();
-            moveActiveOption(-1);
-            break;
-          case "Enter":
-            e.preventDefault();
-            if (activeIndex >= 0) {
-              selectOption(activeIndex, true);
-            }
-            break;
-          case "Escape":
-            e.preventDefault();
-            closeDropdown();
-            elements.selectTrigger.focus();
-            break;
-        }
-      });
-
-      document.addEventListener("click", (e) => {
-        if (
-          !elements.selectTrigger.contains(e.target) &&
-          !elements.selectOptions.contains(e.target)
-        ) {
-          closeDropdown();
-        }
-      });
-
-      load();
-    })();
-  </script>
+<body class="bg-[#16110f] text-[#f3efe8] min-h-screen">
+<div id="root"></div>
+
+<script>
+"use strict";
+
+const INITIAL_DATA = [
+  {"version":"v26.45.1","peso":"701.47 MB","fecha":"28 de agosto de 2026","servidores":[
+    {"nombre":"Filelu","url":"https://filelu.com/1u2icdy1sbky"},
+    {"nombre":"Dropbox","url":"https://www.dropbox.com/scl/fi/qoqdjbwzwdfjyxwsonsml/Minecraft_v26.45.1.apk?rlkey=nf1zjt2qf8pjvico9hxqghoue&st=nij16j4r&dl=0"},
+    {"nombre":"Proton Drive","url":"https://drive.proton.me/urls/SA1FZB134C#oOLEC-hK3W1t"},
+    {"nombre":"Jottacloud","url":"https://jottacloud.com/s/364e5a1650eb3b54f45bebcd0a7ee60cbb2"}
+  ]},
+  {"version":"v26.32.2","peso":"472.39 MB","fecha":"25 de junio de 2026","servidores":[
+    {"nombre":"Dropbox","url":"https://www.dropbox.com/scl/fi/omspdk5ggdg3ebkky07xb/Minecraft_v26.32.2.apk?rlkey=rmuu7w20xm7cxnyb73k5zcgt5&st=pisesz0m&dl=0"},
+    {"nombre":"Proton Drive","url":"https://drive.proton.me/urls/0KX2166NYW#JyHMaW2WgGPt"},
+    {"nombre":"Jottacloud","url":"https://jottacloud.com/s/3649321a444785a425c8a593f25146222fa"},
+    {"nombre":"OneDrive","url":"https://1drv.ms/u/c/dd221ec6f25d28d5/IQACY07orvMzS6NPx5z8dQZuARiq8YihwgyTp2fxBcLe32k"},
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/1xyGTjx5tAjYiG2bF4BQ1791fBaQ"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/otb42zx1u34dqvt/Minecraft_v26.32.2.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1XLor1H-wQpOCVzkISwTMuYJ53REq2tAf/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/oO1XBKSA#TgY-8XGn9oOHst64Qgjg1LVif6lm3Rr6seSuiYpgJGg"},
+    {"nombre":"1fichier","url":"https://alterupload.com/?ebcogs9os3k5owr3zhdr"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.32.2/Minecraft_v26.32.2.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.32.2.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.32.2.apk"}
+  ]},
+  {"version":"v26.31.1","peso":"472.38 MB","fecha":"19 de junio de 2026","servidores":[
+    {"nombre":"Dropbox","url":"https://www.dropbox.com/scl/fi/c5be8kes0enlsekb4o5e2/Minecraft_v26.31.1.apk?rlkey=9srtdethhkbsmfkvt5gr0g855&st=omxiefk3&dl=0"},
+    {"nombre":"Proton Drive","url":"https://drive.proton.me/urls/R14TFPD308#e1Ek0NbSdO0r"},
+    {"nombre":"Jottacloud","url":"https://jottacloud.com/s/364655732cde53a4f7b8de10f2f71bd9ac2"},
+    {"nombre":"OneDrive","url":"https://1drv.ms/u/c/dd221ec6f25d28d5/IQCJS13nEko3Sp6BKZ8B8V5jAe1jH04C-2KhjvDhrjgWn6E"},
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/38PbP3Gjt92wGTj43x8kP7VyAZaT"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/uldkcgtnjkhwmwd/Minecraft_v26.31.1.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1sK9y8GviQLR5L-_8FA39UEQ2gE8dXWGi/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/lKtUxACa#Dm4wlVeyVlu22cFlGtf0P8DGCNOJQQ_llth-7FtsUJY"},
+    {"nombre":"1fichier","url":"https://1fichier.com/?2awv5uzudsvo43er0ex1"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.31.1/Minecraft_v26.31.1.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.31.1.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.31.1.apk"}
+  ]},
+  {"version":"v26.30","peso":"472.62 MB","fecha":"16 de junio de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/QDQaF9FB4ZCF1RzbtVzzFj7G7fTG"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/u6ncsfkpdemnwzu/Minecraft_v26.30.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1ntcSqxD2L2m6RmA56r3-KOB0OpzcuJpK/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/EHNSzBTC#sDs_1ij6bOrW7LqrZlQ2s8Ss8UY9QrazLUzj6xIZwzc"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.30/Minecraft_v26.30.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.30.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.30.apk"}
+  ]},
+  {"version":"v26.23","peso":"440.77 MB","fecha":"21 de mayo de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/75AGZwQ3WY7Vxfk63BVW63R67Pb2"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/hkp0ot88epnia3d/Minecraft_26.23.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1bWtFdpJgDSZM2A5rcwcDlyHWGVaW1SDD/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/tO0GVC4B#9TkO8zQEJInvt78yvJfHgCOQFGtiE4FODlAbYFUp0Po"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.23/Minecraft_v26.23.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.23.apk"}
+  ]},
+  {"version":"v26.20.22","peso":"463.48 MB","fecha":"5 de mayo de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/TRAgCffgP6YD1ZjB6i8fjhkAWw8w"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/nsmnm7u8fui4f0m/Minecraft_v26.20.22.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1uc7A4-Gy4k1c4tTviUJ9-MmgQswXh3mp/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/dC1DVAzb#BS4WtKtFnQ8t4RFXy1Qre63i5jHnKCf9We-T16nGX9k"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.20.22/Minecraft_v26.20.22.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.20.22.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.20.22.apk"}
+  ]},
+  {"version":"v26.10.4","peso":"886.10 MB","fecha":"24 de marzo de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/gb2R5zu79i1B4jzgyvCP32FZaxjk"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/mb1eidrtjq7wvlv/Minecraft_v26.10.4.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1_W6EjQu0nwO7l4Ib4QlQgk8KAW0BS0xY/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/NGF0DQCD#eo9Dfy4fgla8pFXo5iug-fAyfRAJ_jp761UK_1jgwE4"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.10.4/Minecraft_v1.26.10.4.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.10.4.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.10.4.apk"}
+  ]},
+  {"version":"v26.3.1","peso":"882.73 MB","fecha":"2 de marzo de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/XGtk1FfuYjVVv6gP9j5zFABhyFCW"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/qabou2ef1bn21w9/Minecraft_v26.3.1.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1PUGnKBBwMTNW0uuJxhJcu6sjwk06niOE/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/4a8TDZ6J#dbDwNlYRi6gJmmbw1H-PUEt7G2THL1k2kaRv7f2nAvo"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.3.1/Minecraft_v26.3.1.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.3.1.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.3.1.apk"}
+  ]},
+  {"version":"v26.2.1","peso":"880.56 MB","fecha":"25 de febrero de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/zVFZ9xvN61aGuTiDjxjZZ3CtRF3y"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/vuyg541lp8jldhv/Minecraft_v26.2.1.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/16fjw_gHkHmcUDOTvuDuXbMcKlPJIM-K4/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/9fFiTS7S#EQ1SsgRIvKUp-b8VA-MrENcPUpEJHiDV9LdibGl-bzM"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.2.1/Minecraft_v26.2.1.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.2.1.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.2.1.apk"}
+  ]},
+  {"version":"v26.1.1","peso":"880.57 MB","fecha":"19 de febrero de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/SYNt5PYuBva2bg6Z9GGaBi1QFy36"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/wlr40m5ee8ewxtq/Minecraft_v26.1.1.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1ddDWqqVTRTIC09fKVbHt9gkOXOQPQHlv/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/gWFinSRT#L5uoG3gRYxuuKtvXotfwxIJH0oQEs7dfFyfk7xm4O64"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.1.1.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.1.1.apk"}
+  ]},
+  {"version":"v26.0.2","peso":"880.60 MB","fecha":"10 de febrero de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/TuWfTzP3W5ZuYQGyZDRByuxxDDDW"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/mb8c4gow0g1w6cl/Minecraft_v26.0.2.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1orAx2j7aaUQ7RXuOlliFRVvc0L19P3yu/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/MftT0IhQ#zbdhU_XPZit81p44-we8GV3X-BNuD-UWnCBBBk1G55o"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v26.0.2/Minecraft_v26.0.2.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.0.2.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.0.2.apk"}
+  ]},
+  {"version":"v1.21.132.1","peso":"588.87 MB","fecha":"8 de enero de 2026","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/FjkNPf4Qi9FQW1QYP3ZwNbzFbu8v"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/y1rlabnltj6tmb9/Minecraft_v1.21.132.1.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1uW-yXX-fiLaZ4eI8uGPejhjjHqnkAXNm/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/4LEzjYjD#JZzy3UJCUj7KFlj1oPJB65i5L_CXCsA6F18tYx9iw2Q"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v1.21.132.1/Minecraft_v1.21.132.1.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v1.21.132.1.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v1.21.132.1.apk"}
+  ]},
+  {"version":"v1.21.131.1","peso":"588.88 MB","fecha":"16 de diciembre de 2025","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/whVC8AxXxzWavFfh7ZNYva9gzfZW"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/llq98w7v9vbun8f/Minecraft_v1.21.131.1.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1mw_2iCYegzfwcklfAnuQCKb5rRw4_hEn/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/RCkkyIRJ#hxndsyMphrFXGYpKIxFlQgvo4et_yJ379RTojYVbacs"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v1.21.131.1/Minecraft_v1.21.131.1.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v1.21.131.1.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v1.21.131.1.apk"}
+  ]},
+  {"version":"v1.21.130.3","peso":"589.07 MB","fecha":"9 de diciembre de 2025","servidores":[
+    {"nombre":"Icedrive","url":"https://icedrive.net/s/QibWQCiSG286w7BBt3BAtAkff15u"},
+    {"nombre":"Mediafire","url":"https://www.mediafire.com/file/fkm8167wr1k2xqk/Minecraft_v1.21.130.3.zip/file"},
+    {"nombre":"Google Drive","url":"https://drive.google.com/file/d/1SBpzTCgAgr-stDYEzMmGxebfXwkRQc67/view?usp=drivesdk"},
+    {"nombre":"Mega","url":"https://mega.nz/file/lOMAzZTT#weCB9CSmS4MedYF3dfZhaqQ3roWPAj-0zeShjiz52Es"},
+    {"nombre":"GitHub","url":"https://github.com/thiagowiegert/Mine-Api/releases/download/v1.21.130.3/Minecraft_v1.21.130.3.apk"},
+    {"nombre":"AWS","url":"https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v1.21.130.3.apk"},
+    {"nombre":"Mine API Server","url":"https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v1.21.130.3.apk"}
+  ]}
+];
+
+let state = {
+  versions: JSON.parse(JSON.stringify(INITIAL_DATA)),
+  selected: 0,
+  filter: "",
+  toast: null,
+};
+
+function uid() { return Math.random().toString(36).slice(2, 9); }
+
+function render() {
+  const root = document.getElementById("root");
+  root.innerHTML = "";
+  root.appendChild(buildLayout());
+}
+
+function el(tag, cls, props) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (props) Object.assign(e, props);
+  return e;
+}
+
+function showToast(msg) {
+  state.toast = msg;
+  render();
+  setTimeout(() => { state.toast = null; render(); }, 1800);
+}
+
+function buildLayout() {
+  const wrap = el("div", "min-h-screen flex flex-col");
+
+  // Topbar
+  const topbar = el("header", "flex items-center justify-between gap-3 px-5 py-3 border-b border-white/10 bg-[#1b1714] sticky top-0 z-20 flex-wrap");
+  const brand = el("div", "flex items-center gap-3");
+  const dot = el("span", "w-3 h-3 bg-[#7ccf4c]");
+  const title = el("span", "font-bold uppercase tracking-widest text-sm");
+  title.textContent = "Mine API — Admin Panel";
+  brand.append(dot, title);
+
+  const actions = el("div", "flex items-center gap-2 flex-wrap");
+  const importBtn = btn("Importar JSON", "fa-solid fa-file-import", () => openImportModal());
+  const exportBtn = btn("Descargar JSON", "fa-solid fa-download", downloadJSON, true);
+  const copyBtn = btn("Copiar JSON", "fa-solid fa-copy", copyJSON);
+  actions.append(importBtn, copyBtn, exportBtn);
+
+  topbar.append(brand, actions);
+  wrap.appendChild(topbar);
+
+  // Body
+  const body = el("div", "flex flex-1 min-h-0 flex-col md:flex-row");
+  body.appendChild(buildSidebar());
+  body.appendChild(buildDetail());
+  wrap.appendChild(body);
+
+  // JSON preview
+  wrap.appendChild(buildPreview());
+
+  // Toast
+  if (state.toast) {
+    const toast = el("div", "fixed bottom-5 right-5 bg-[#7ccf4c] text-[#12210c] font-bold text-sm px-4 py-2.5 z-50 shadow-none");
+    toast.textContent = state.toast;
+    wrap.appendChild(toast);
+  }
+
+  return wrap;
+}
+
+function btn(label, icon, onClick, primary) {
+  const b = el("button", `inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold uppercase tracking-wide border transition-colors ${
+    primary
+      ? "bg-[#7ccf4c] text-[#12210c] border-[#7ccf4c] hover:bg-[#93e866]"
+      : "bg-transparent text-[#f3efe8] border-white/15 hover:border-[#7ccf4c] hover:text-[#7ccf4c]"
+  }`);
+  const i = el("i", icon + " text-[11px]");
+  const span = el("span");
+  span.textContent = label;
+  b.append(i, span);
+  b.addEventListener("click", onClick);
+  return b;
+}
+
+function buildSidebar() {
+  const side = el("aside", "w-full md:w-80 border-b md:border-b-0 md:border-r border-white/10 bg-[#171310] flex flex-col");
+
+  const searchWrap = el("div", "p-3 border-b border-white/10");
+  const search = el("input", "w-full bg-[#1e1b19] border border-white/10 px-3 py-2 text-sm focus:outline-none focus:border-[#7ccf4c]", {
+    placeholder: "Buscar versión...",
+    value: state.filter,
+  });
+  search.addEventListener("input", (e) => { state.filter = e.target.value; render(); });
+  searchWrap.appendChild(search);
+  side.appendChild(searchWrap);
+
+  const addWrap = el("div", "p-3 border-b border-white/10");
+  const addBtn = el("button", "w-full flex items-center justify-center gap-2 px-3 py-2.5 text-xs font-bold uppercase tracking-wide bg-[#7ccf4c] text-[#12210c] hover:bg-[#93e866]");
+  addBtn.innerHTML = '<i class="fa-solid fa-plus text-[11px]"></i><span>Nueva versión</span>';
+  addBtn.addEventListener("click", addVersion);
+  addWrap.appendChild(addBtn);
+  side.appendChild(addWrap);
+
+  const list = el("div", "flex-1 overflow-y-auto max-h-[46vh] md:max-h-none divide-y divide-white/5");
+  const filtered = state.versions
+    .map((v, i) => ({ v, i }))
+    .filter(({ v }) => v.version.toLowerCase().includes(state.filter.toLowerCase()));
+
+  if (!filtered.length) {
+    const empty = el("div", "p-4 text-xs text-[#aaa196]");
+    empty.textContent = "Sin resultados.";
+    list.appendChild(empty);
+  }
+
+  filtered.forEach(({ v, i }, pos) => {
+    const row = el("div", `group flex items-center gap-2 px-3 py-2.5 cursor-pointer ${i === state.selected ? "bg-[#7ccf4c]/10 border-l-2 border-l-[#7ccf4c]" : "hover:bg-white/5 border-l-2 border-l-transparent"}`);
+
+    const info = el("div", "flex-1 min-w-0 flex flex-col");
+    const name = el("div", `text-sm font-bold truncate mono ${i === state.selected ? "text-[#7ccf4c]" : "text-[#f3efe8]"}`);
+    name.textContent = v.version || "(sin nombre)";
+    const meta = el("div", "text-[11px] text-[#aaa196] truncate");
+    meta.textContent = `${v.servidores.length} servidor(es) · ${v.peso || "s/d"}`;
+    info.append(name, meta);
+    info.addEventListener("click", () => { state.selected = i; render(); });
+
+    const controls = el("div", "flex items-center gap-1 opacity-60 group-hover:opacity-100");
+    const upBtn = iconBtn("fa-solid fa-arrow-up", () => moveVersion(i, -1));
+    const downBtn = iconBtn("fa-solid fa-arrow-down", () => moveVersion(i, 1));
+    const delBtn = iconBtn("fa-solid fa-trash", () => deleteVersion(i), true);
+    if (pos === 0) upBtn.disabled = true, upBtn.classList.add("opacity-20", "cursor-not-allowed");
+    if (pos === filtered.length - 1) downBtn.disabled = true, downBtn.classList.add("opacity-20", "cursor-not-allowed");
+    controls.append(upBtn, downBtn, delBtn);
+
+    row.append(info, controls);
+    list.appendChild(row);
+  });
+
+  side.appendChild(list);
+  return side;
+}
+
+function iconBtn(icon, onClick, danger) {
+  const b = el("button", `w-6 h-6 flex items-center justify-center text-[10px] border ${danger ? "border-transparent text-[#e0785f] hover:bg-[#e0785f]/15" : "border-transparent text-[#aaa196] hover:text-[#7ccf4c] hover:bg-white/5"}`);
+  b.innerHTML = `<i class="${icon}"></i>`;
+  b.addEventListener("click", (e) => { e.stopPropagation(); onClick(); });
+  return b;
+}
+
+function buildDetail() {
+  const wrap = el("div", "flex-1 p-4 md:p-6 overflow-y-auto max-h-[54vh] md:max-h-none");
+  const v = state.versions[state.selected];
+
+  if (!v) {
+    const empty = el("div", "text-sm text-[#aaa196]");
+    empty.textContent = "No hay versión seleccionada. Creá una nueva versión para empezar.";
+    wrap.appendChild(empty);
+    return wrap;
+  }
+
+  const label = el("div", "text-[11px] font-bold uppercase tracking-widest text-[#aaa196] mb-4");
+  label.textContent = `Editando versión #${state.selected + 1} de ${state.versions.length}`;
+  wrap.appendChild(label);
+
+  // Fields
+  const grid = el("div", "grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6");
+  grid.appendChild(field("Versión", v.version, (val) => { v.version = val; renderKeepPreview(); }));
+  grid.appendChild(field("Peso", v.peso, (val) => { v.peso = val; renderKeepPreview(); }));
+  grid.appendChild(field("Fecha", v.fecha, (val) => { v.fecha = val; renderKeepPreview(); }));
+  wrap.appendChild(grid);
+
+  // Servers
+  const serverHeader = el("div", "flex items-center justify-between mb-3");
+  const serverTitle = el("div", "text-[11px] font-bold uppercase tracking-widest text-[#aaa196]");
+  serverTitle.textContent = `Servidores (${v.servidores.length})`;
+  const addServerBtn = el("button", "inline-flex items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-wide border border-white/15 hover:border-[#7ccf4c] hover:text-[#7ccf4c]");
+  addServerBtn.innerHTML = '<i class="fa-solid fa-plus text-[10px]"></i><span>Agregar servidor</span>';
+  addServerBtn.addEventListener("click", () => { v.servidores.push({ nombre: "Nuevo servidor", url: "" }); render(); });
+  serverHeader.append(serverTitle, addServerBtn);
+  wrap.appendChild(serverHeader);
+
+  const serversWrap = el("div", "border border-white/10 divide-y divide-white/10");
+  if (!v.servidores.length) {
+    const empty = el("div", "p-4 text-xs text-[#aaa196]");
+    empty.textContent = "Esta versión no tiene servidores todavía.";
+    serversWrap.appendChild(empty);
+  }
+
+  v.servidores.forEach((s, si) => {
+    const row = el("div", "flex flex-col sm:flex-row gap-2 p-3 items-stretch sm:items-center bg-[#1b1816]");
+
+    const nameInput = el("input", "sm:w-40 bg-[#1e1b19] border border-white/10 px-2.5 py-2 text-sm focus:outline-none focus:border-[#7ccf4c]", { value: s.nombre, placeholder: "Nombre" });
+    nameInput.addEventListener("input", (e) => { s.nombre = e.target.value; });
+    nameInput.addEventListener("blur", renderKeepPreview);
+
+    const urlInput = el("input", "flex-1 mono bg-[#1e1b19] border border-white/10 px-2.5 py-2 text-sm focus:outline-none focus:border-[#7ccf4c]", { value: s.url, placeholder: "https://..." });
+    urlInput.addEventListener("input", (e) => { s.url = e.target.value; });
+    urlInput.addEventListener("blur", renderKeepPreview);
+
+    const rowControls = el("div", "flex items-center gap-1 justify-end sm:justify-start");
+    const upB = iconBtn("fa-solid fa-arrow-up", () => moveServer(si, -1));
+    const downB = iconBtn("fa-solid fa-arrow-down", () => moveServer(si, 1));
+    const delB = iconBtn("fa-solid fa-trash", () => { v.servidores.splice(si, 1); render(); }, true);
+    if (si === 0) upB.disabled = true, upB.classList.add("opacity-20");
+    if (si === v.servidores.length - 1) downB.disabled = true, downB.classList.add("opacity-20");
+    rowControls.append(upB, downB, delB);
+
+    row.append(nameInput, urlInput, rowControls);
+    serversWrap.appendChild(row);
+  });
+
+  wrap.appendChild(serversWrap);
+  return wrap;
+}
+
+function field(labelText, value, onChange) {
+  const w = el("div", "flex flex-col gap-1.5");
+  const l = el("label", "text-[10px] font-bold uppercase tracking-widest text-[#aaa196]");
+  l.textContent = labelText;
+  const input = el("input", "bg-[#1e1b19] border border-white/10 px-3 py-2.5 text-sm font-semibold focus:outline-none focus:border-[#7ccf4c]", { value: value || "" });
+  input.addEventListener("input", (e) => onChange(e.target.value));
+  w.append(l, input);
+  return w;
+}
+
+function renderKeepPreview() {
+  const previewEl = document.getElementById("json-preview");
+  render();
+}
+
+function buildPreview() {
+  const wrap = el("div", "border-t border-white/10 bg-[#100e0c]");
+  const header = el("div", "flex items-center justify-between px-5 py-2.5 border-b border-white/10");
+  const t = el("span", "text-[11px] font-bold uppercase tracking-widest text-[#aaa196]");
+  t.textContent = "Vista previa del JSON final";
+  header.appendChild(t);
+  wrap.appendChild(header);
+
+  const pre = el("textarea", "w-full h-40 bg-[#100e0c] text-[#7ccf4c] mono text-xs p-4 focus:outline-none", { readOnly: true });
+  pre.value = JSON.stringify(state.versions, null, 2);
+  wrap.appendChild(pre);
+  return wrap;
+}
+
+function addVersion() {
+  state.versions.unshift({ version: "vNueva", peso: "0 MB", fecha: "", servidores: [] });
+  state.selected = 0;
+  render();
+}
+
+function deleteVersion(i) {
+  if (!confirm(`¿Eliminar la versión "${state.versions[i].version}"?`)) return;
+  state.versions.splice(i, 1);
+  if (state.selected >= state.versions.length) state.selected = Math.max(0, state.versions.length - 1);
+  render();
+}
+
+function moveVersion(i, dir) {
+  const j = i + dir;
+  if (j < 0 || j >= state.versions.length) return;
+  [state.versions[i], state.versions[j]] = [state.versions[j], state.versions[i]];
+  if (state.selected === i) state.selected = j;
+  else if (state.selected === j) state.selected = i;
+  render();
+}
+
+function moveServer(i, dir) {
+  const v = state.versions[state.selected];
+  const j = i + dir;
+  if (j < 0 || j >= v.servidores.length) return;
+  [v.servidores[i], v.servidores[j]] = [v.servidores[j], v.servidores[i]];
+  render();
+}
+
+function copyJSON() {
+  const text = JSON.stringify(state.versions, null, 2);
+  navigator.clipboard.writeText(text).then(() => showToast("JSON copiado al portapapeles"));
+}
+
+function downloadJSON() {
+  const text = JSON.stringify(state.versions, null, 2);
+  const blob = new Blob([text], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "versions.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  showToast("versions.json descargado");
+}
+
+function openImportModal() {
+  const overlay = el("div", "fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50");
+  const modal = el("div", "bg-[#171310] border border-white/10 w-full max-w-xl flex flex-col");
+
+  const head = el("div", "flex items-center justify-between px-4 py-3 border-b border-white/10");
+  const ht = el("span", "text-xs font-bold uppercase tracking-widest");
+  ht.textContent = "Importar JSON";
+  const closeX = iconBtn("fa-solid fa-xmark", () => overlay.remove());
+  head.append(ht, closeX);
+
+  const body = el("div", "p-4 flex flex-col gap-3");
+  const desc = el("p", "text-xs text-[#aaa196]");
+  desc.textContent = "Pegá el contenido completo de tu versions.json para reemplazar los datos actuales.";
+  const textarea = el("textarea", "w-full h-56 bg-[#1e1b19] border border-white/10 mono text-xs p-3 focus:outline-none focus:border-[#7ccf4c]", { placeholder: "[ ... ]" });
+
+  const applyBtn = el("button", "self-end px-4 py-2 text-xs font-bold uppercase tracking-wide bg-[#7ccf4c] text-[#12210c] hover:bg-[#93e866]");
+  applyBtn.textContent = "Aplicar";
+  applyBtn.addEventListener("click", () => {
+    try {
+      const parsed = JSON.parse(textarea.value);
+      if (!Array.isArray(parsed)) throw new Error("El JSON debe ser un array");
+      state.versions = parsed.map((item) => ({
+        version: item.version || "",
+        peso: item.peso || "",
+        fecha: item.fecha || "",
+        servidores: Array.isArray(item.servidores) ? item.servidores.map((s) => ({ nombre: s.nombre || "", url: s.url || "" })) : [],
+      }));
+      state.selected = 0;
+      overlay.remove();
+      render();
+      showToast("JSON importado correctamente");
+    } catch (err) {
+      alert("Error al parsear el JSON: " + err.message);
+    }
+  });
+
+  body.append(desc, textarea, applyBtn);
+  modal.append(head, body);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+}
+
+render();
+</script>
 </body>
 </html>
