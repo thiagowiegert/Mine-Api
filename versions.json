@@ -27,6 +27,18 @@
       {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/b283TSgujWjPGS16wARXAXNyGviQ"
+      },
+      {
+        "nombre": "Mediafire",
+        "url": "https://www.mediafire.com/file/nivicxn35nlxhh4/Minecraft_v26.45.1.zip/file"
+      },
+      {
+        "nombre": "Google Drive",
+        "url": "https://drive.google.com/file/d/1OAhTZwe071pjIuCDO1s_2QoH6GGLNib6/view?usp=drivesdk"
+      },
+      {
+        "nombre": "Mega",
+        "url": "https://mega.nz/file/1X0lFRhZ#hhempmsVafxeLXI1inIW8mZK6AumEy1mDjdqRsHVDEY"
       }
     ]
   },
