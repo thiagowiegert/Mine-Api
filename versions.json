@@ -221,6 +221,10 @@
     "fecha": "21 de mayo de 2026",
     "servidores": [
       {
+        "nombre": "Jottacloud",
+        "url": "https://jottacloud.com/s/36421fff1a56ed8454696ae1724b02b4e8f"
+      },
+      {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/75AGZwQ3WY7Vxfk63BVW63R67Pb2"
       },
