@@ -410,22 +410,6 @@
     "fecha": "19 de febrero de 2026",
     "servidores": [
       {
-        "nombre": "Icedrive",
-        "url": "https://icedrive.net/s/SYNt5PYuBva2bg6Z9GGaBi1QFy36"
-      },
-      {
-        "nombre": "Mediafire",
-        "url": "https://www.mediafire.com/file/wlr40m5ee8ewxtq/Minecraft_v26.1.1.zip/file"
-      },
-      {
-        "nombre": "Google Drive",
-        "url": "https://drive.google.com/file/d/1ddDWqqVTRTIC09fKVbHt9gkOXOQPQHlv/view?usp=drivesdk"
-      },
-      {
-        "nombre": "Mega",
-        "url": "https://mega.nz/file/gWFinSRT#L5uoG3gRYxuuKtvXotfwxIJH0oQEs7dfFyfk7xm4O64"
-      },
-      {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"
       },
@@ -444,22 +428,6 @@
     "peso": "880.60 MB",
     "fecha": "10 de febrero de 2026",
     "servidores": [
-      {
-        "nombre": "Icedrive",
-        "url": "https://icedrive.net/s/TuWfTzP3W5ZuYQGyZDRByuxxDDDW"
-      },
-      {
-        "nombre": "Mediafire",
-        "url": "https://www.mediafire.com/file/mb8c4gow0g1w6cl/Minecraft_v26.0.2.zip/file"
-      },
-      {
-        "nombre": "Google Drive",
-        "url": "https://drive.google.com/file/d/1orAx2j7aaUQ7RXuOlliFRVvc0L19P3yu/view?usp=drivesdk"
-      },
-      {
-        "nombre": "Mega",
-        "url": "https://mega.nz/file/MftT0IhQ#zbdhU_XPZit81p44-we8GV3X-BNuD-UWnCBBBk1G55o"
-      },
       {
         "nombre": "1fichier",
         "url": "https://1fichier.com/?9wjrbdjfm9ovhb6iu3kl"
