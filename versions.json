@@ -103,6 +103,10 @@
     "fecha": "21 de mayo de 2026",
     "servidores": [
       {
+        "nombre": "Mine API Server",
+        "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.23.apk"
+      },
+      {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.23/Minecraft_v26.23.apk"
       },
