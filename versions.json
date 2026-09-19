@@ -410,6 +410,10 @@
     "fecha": "19 de febrero de 2026",
     "servidores": [
       {
+        "nombre": "1fichier",
+        "url": "https://1fichier.com/?7rbjj5dai4lnw87bkxtp"
+      },
+      {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"
       },
