@@ -1,13 +1,20 @@
 [
   {
+    "version": "v26.51.1",
+    "peso": "668.71 MB",
+    "fecha": "16 de septiembre de 2026",
+    "servidores": [
+      {
+        "nombre": "Filelu",
+        "url": "https://filelu.com/8vzpolrfkvog"
+      }
+    ]
+  },
+  {
     "version": "v26.50.4",
     "peso": "668.71 MB",
     "fecha": "15 de septiembre de 2026",
     "servidores": [
-      {
-        "nombre": "Filelu",
-        "url": "https://filelu.com/wgfamfi23b27"
-      },
       {
         "nombre": "Dropbox",
         "url": "https://www.dropbox.com/scl/fi/vzhd2cdfnw3znrmr93yaq/Minecraft_v26.50.4.apk?rlkey=uff2qhsioxjskcgzfesrhq9s0&st=rtii3tzd&dl=0"
@@ -19,10 +26,6 @@
     "peso": "701.47 MB",
     "fecha": "28 de agosto de 2026",
     "servidores": [
-      {
-        "nombre": "Filelu",
-        "url": "https://filelu.com/1u2icdy1sbky"
-      },
       {
         "nombre": "Dropbox",
         "url": "https://www.dropbox.com/scl/fi/qoqdjbwzwdfjyxwsonsml/Minecraft_v26.45.1.apk?rlkey=nf1zjt2qf8pjvico9hxqghoue&st=nij16j4r&dl=0"
