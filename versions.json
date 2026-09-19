@@ -445,14 +445,6 @@
     "fecha": "10 de febrero de 2026",
     "servidores": [
       {
-        "nombre": "Jottacloud",
-        "url": "https://jottacloud.com/s/3643c5a827da70c4bb78dad3c05bc28e7d3"
-      },
-      {
-        "nombre": "OneDrive",
-        "url": "https://1drv.ms/u/c/dd221ec6f25d28d5/IQBVISY1FfdJSLEz8LwX2PMNAX1UxdGwiCAlw5G7SEcSL08"
-      },
-      {
         "nombre": "Icedrive",
         "url": "https://icedrive.net/s/TuWfTzP3W5ZuYQGyZDRByuxxDDDW"
       },
