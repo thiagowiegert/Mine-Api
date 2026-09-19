@@ -375,22 +375,6 @@
     "fecha": "25 de febrero de 2026",
     "servidores": [
       {
-        "nombre": "Icedrive",
-        "url": "https://icedrive.net/s/zVFZ9xvN61aGuTiDjxjZZ3CtRF3y"
-      },
-      {
-        "nombre": "Mediafire",
-        "url": "https://www.mediafire.com/file/vuyg541lp8jldhv/Minecraft_v26.2.1.zip/file"
-      },
-      {
-        "nombre": "Google Drive",
-        "url": "https://drive.google.com/file/d/16fjw_gHkHmcUDOTvuDuXbMcKlPJIM-K4/view?usp=drivesdk"
-      },
-      {
-        "nombre": "Mega",
-        "url": "https://mega.nz/file/9fFiTS7S#EQ1SsgRIvKUp-b8VA-MrENcPUpEJHiDV9LdibGl-bzM"
-      },
-      {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.2.1/Minecraft_v26.2.1.apk"
       },
