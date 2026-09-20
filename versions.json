@@ -7,6 +7,14 @@
       {
         "nombre": "Mine API Server",
         "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.51.1.apk"
+      },
+      {
+        "nombre": "GitHub",
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.51.1/Minecraft_v26.51.1.apk"
+      },
+      {
+        "nombre": "AWS",
+        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.51.1.apk"
       }
     ]
   },
