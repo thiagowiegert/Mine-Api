@@ -11,10 +11,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.51.1/Minecraft_v26.51.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.51.1.apk"
       }
     ]
   },
@@ -30,10 +26,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.50.4/Minecraft_v26.50.4.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.50.4.apk"
       }
     ]
   },
@@ -49,10 +41,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.45.1/Minecraft_v26.45.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.45.1.apk"
       }
     ]
   },
@@ -68,10 +56,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.32.2/Minecraft_v26.32.2.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.32.2.apk"
       }
     ]
   },
@@ -87,10 +71,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.31.1/Minecraft_v26.31.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.31.1.apk"
       }
     ]
   },
@@ -106,10 +86,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.30/Minecraft_v26.30.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.30.apk"
       }
     ]
   },
@@ -125,10 +101,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.23/Minecraft_v26.23.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.23.apk"
       }
     ]
   },
@@ -144,10 +116,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.20.22/Minecraft_v26.20.22.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.20.22.apk"
       }
     ]
   },
@@ -163,10 +131,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.10.4/Minecraft_v1.26.10.4.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.10.4.apk"
       }
     ]
   },
@@ -182,10 +146,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.3.1/Minecraft_v26.3.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.3.1.apk"
       }
     ]
   },
@@ -201,10 +161,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.2.1/Minecraft_v26.2.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.2.1.apk"
       }
     ]
   },
@@ -220,10 +176,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.1.1/Minecraft_v26.1.1.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.1.1.apk"
       }
     ]
   },
@@ -239,10 +191,6 @@
       {
         "nombre": "GitHub",
         "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.0.2/Minecraft_v26.0.2.apk"
-      },
-      {
-        "nombre": "AWS",
-        "url": "https://principal-wiegert.s3.us-east-2.amazonaws.com/Minecraft+APKs/Minecraft_v26.0.2.apk"
       }
     ]
   }
