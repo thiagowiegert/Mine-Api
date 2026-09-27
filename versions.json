@@ -1,5 +1,20 @@
 [
   {
+    "version": "v26.52.3",
+    "peso": "994.04 MB",
+    "fecha": "25 de septiembre de 2026",
+    "servidores": [
+      {
+        "nombre": "Mine API Server",
+        "url": "https://files.mineapi.qzz.io/Minecraft%20APKs/Minecraft_v26.52.3.apk"
+      },
+      {
+        "nombre": "GitHub",
+        "url": "https://github.com/thiagowiegert/Mine-Api/releases/download/v26.52.3/Minecraft_v26.52.3.apk"
+      }
+    ]
+  },
+  {
     "version": "v26.51.1",
     "peso": "668.71 MB",
     "fecha": "16 de septiembre de 2026",
